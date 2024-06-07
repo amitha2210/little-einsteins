@@ -31,13 +31,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Google,
     Credentials({
         authorize: async (credentials) => {
-            try {
-                const user = await login(credentials)
-                //console.log(user)
-                return user
-            } catch (error) {
-                return null
-            }
+            // try {
+            //     const user = await login(credentials)
+            //     //console.log(user)
+            //     return user
+            // } catch (error) {
+            //     return null
+            // }
+            const user = await login(credentials)
+            if (user) return user
+            return null
         }
     })],
   callbacks: {

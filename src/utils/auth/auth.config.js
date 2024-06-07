@@ -22,14 +22,21 @@ export const authConfig = {
             const user = auth?.user
             const isOnAboutPage = nextUrl?.pathname.startsWith("/about")
             const isOnLoginPage = nextUrl?.pathname.startsWith("/login")
+            const isOnRegisterPage = nextUrl?.pathname.startsWith("/register")
 
-            //only authenticated users can reach page
+            //returning false redirects to login page
+            //only authenticated users can reach About page
             if (isOnAboutPage && !user) {
                 return false
+                //return NextResponse.redirect(new URL("/login", nextUrl))
             }
 
             //only unauthenticated users can reach the login page
             if (isOnLoginPage && user) {
+                return NextResponse.redirect(new URL("/", nextUrl))
+            }
+
+            if (isOnRegisterPage && user) {
                 return NextResponse.redirect(new URL("/", nextUrl))
             }
 
