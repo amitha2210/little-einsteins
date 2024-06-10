@@ -47,6 +47,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async signIn({ user, account, profile }) {
         console.log(user)
         console.log(account)
+        console.log("HERE")
         console.log(profile)
         
         if (account.provider === "google") {
@@ -59,6 +60,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     await client.db("credentials").collection("credentials").insertOne({
                         username: profile.name,
                         email: profile.email,
+                        emailVerified: true,
                         profile_pic: profile.picture,
                         user_created: new Date(),
                         updated: new Date()
@@ -70,6 +72,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 return false
             }
         }
+        const client = await ConnectionToDB
+        const user1 = await client.db("credentials").collection("credentials")
+                                    .findOne({ "email": user.email })
+        if (!user1?.emailVerified) return false
         return true
     },
     ...authConfig.callbacks,

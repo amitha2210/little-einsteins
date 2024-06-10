@@ -23,3 +23,8 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 export default clientPromise;
+
+export const getUserByEmail = async (email) => {
+  client = await clientPromise
+  user = client.db("credentials").collection("credentials").findOne({ "email": email})
+}
