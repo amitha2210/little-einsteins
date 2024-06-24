@@ -18,6 +18,9 @@ function LoginForm() {
             <form action={formAction} className={styles.form}>
                 <input type="text" placeholder="Username" name="username" required />
                 <input type="password" placeholder="Password" name="password" required />
+                <Link href="/reset-email">
+                    Forgot Password?
+                </Link>
                 <button type="submit">Login</button>
                 {state?.error}
                 <Link href="/register">

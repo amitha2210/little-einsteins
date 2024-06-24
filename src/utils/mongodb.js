@@ -26,5 +26,6 @@ export default clientPromise;
 
 export const getUserByEmail = async (email) => {
   client = await clientPromise
-  user = client.db("credentials").collection("credentials").findOne({ "email": email})
+  const user = await client.db("credentials").collection("credentials").findOne({ "email": email})
+  return user
 }

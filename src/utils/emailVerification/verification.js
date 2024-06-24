@@ -2,25 +2,20 @@ import { v4 as uuidv4 } from "uuid"
 import connectionToDB from "../mongodb"
 import { Resend } from "resend"
 
-// async function isUserVerified(email) {
-//     const client = await connectionToDB
-//     const user = await client.db("credentials").collection("credentials")
-//     .findOne({ "email": email }, { projection: { emailVerified: true }})
-//     return user.emailVerified
-// }
-
 const getVerificationTokenByEmail = async (email) => {
     const client = await connectionToDB
-    const verificationToken = await client.db("credentials").collection("verificationToken")
-    .findOne({ "email": email })
+    const verificationToken = await client.db("credentials")
+                                            .collection("verificationToken")
+                                            .findOne({ "email": email })
     
     return verificationToken
 }
 
 export const getVerificationTokenByToken = async (token) => {
     const client = await connectionToDB
-    const verificationToken = await client.db("credentials").collection("verificationToken")
-    .findOne({ "token": token })
+    const verificationToken = await client.db("credentials")
+                                            .collection("verificationToken")
+                                            .findOne({ "token": token })
     
     return verificationToken
 }
@@ -36,8 +31,9 @@ export const generateVerificationToken = async (email) => {
     }
 
     const client = await connectionToDB
-    await client.db("credentials").collection("verificationToken")
-    .replaceOne({ "email": email }, verificationToken, { upsert: true })
+    await client.db("credentials")
+                .collection("verificationToken")
+                .replaceOne({ "email": email }, verificationToken, { upsert: true })
     
     return verificationToken
 }
@@ -51,6 +47,6 @@ export const sendVerificationEmail = async (email, token) => {
         to: email,
         subject: 'Confirm your email',
         html: `<p>Click <a href="${confirmationLink}">here< /a> to confirm email.<p>`
-      })
+    })
 
 }

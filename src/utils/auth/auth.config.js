@@ -27,7 +27,7 @@ export const authConfig = {
             //returning false redirects to login page
             //only authenticated users can reach About page
             if (isOnAboutPage && !user) {
-                //return false
+                return false
                 //return NextResponse.redirect(new URL("/login", nextUrl))
             }
 
