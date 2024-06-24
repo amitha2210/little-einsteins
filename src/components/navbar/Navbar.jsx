@@ -8,10 +8,15 @@ const Navbar = async () => {
   const session = await auth()
        
   return (
-      <div className="fixed top-0 bg-[#D0ECE7] text-gray-600 font-semibold p-9 flex flex-row w-full justify-center items-center">
+      <div className="fixed top-0 bg-[#D0ECE7] text-gray-600 font-semibold p-9 flex flex-row w-full space-x-20 justify-center items-center">
         <div>
             <Link href="/about">
                 About
+            </Link>
+        </div>
+        <div>
+            <Link href="/gemini">
+                Generate Itinerary
             </Link>
         </div>
 
