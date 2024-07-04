@@ -2,7 +2,7 @@
 import generateText from "@/utils/gemini2"
 import { useFormState } from "react-dom"
 
-function Gemini() {
+function Plan() {
     const [state, formAction] = useFormState(generateText, "")
 
     return (
@@ -18,4 +18,4 @@ function Gemini() {
    
 }
 
-export default Gemini
+export default Plan

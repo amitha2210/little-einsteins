@@ -11,7 +11,7 @@ export const handleGoogleLogin = async () => {
 }
 
 export const handleLogout = async () => {
-    await signOut({redirectTo: "/"}) 
+    await signOut({redirectTo: "/home"}) 
 }
 
 export const register = async (previousState, formData) => {
@@ -64,7 +64,7 @@ export const login = async (previousState, formData) => {
     }
 
     try {
-        await signIn("credentials", { username, password, redirectTo: "/" })
+        await signIn("credentials", { username, password, redirectTo: "/home" })
     } catch (error) {
         console.log(error)
         if (error instanceof AuthError) {

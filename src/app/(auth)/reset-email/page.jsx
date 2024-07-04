@@ -3,9 +3,9 @@ import ResetPasswordEmailForm from "@/components/resetPasswordEmailForm/ResetPas
 function SendPasswordResetEmailPage() {
 
     return (
-        <>
+        <div className="size-full">
             <ResetPasswordEmailForm />
-        </>
+        </div>
     )
 }
 
