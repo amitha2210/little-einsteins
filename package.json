@@ -13,13 +13,25 @@
     "@google/generative-ai": "^0.14.1",
     "@react-google-maps/api": "^2.19.3",
     "bcryptjs": "^2.4.3",
+    "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
     "mongodb": "^6.8.0",
+<<<<<<< Updated upstream
     "next": "14.2.4",
+=======
+    "next": "14.2.3",
+>>>>>>> Stashed changes
     "next-auth": "^5.0.0-beta.19",
-    "react": "^18",
+    "react": "^18.3.1",
+    "react-date-range": "^2.0.1",
     "react-dom": "^18",
+<<<<<<< Updated upstream
     "resend": "^3.4.0",
+=======
+    "react-icons": "^5.2.1",
+    "resend": "^3.2.0",
+    "rsuite": "^5.65.1",
+>>>>>>> Stashed changes
     "uuid": "^10.0.0"
   },
   "devDependencies": {
