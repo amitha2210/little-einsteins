@@ -1,0 +1,51 @@
+.dates-container {
+    display: flex;
+    align-items: center;
+}
+
+.dates-container {
+    margin: 10px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    color: #00b4d8;
+}
+
+.dates{
+    text-align: center;
+    padding-top: 30px;
+}
+
+/*
+.re-picker-rtl .rs-picker-toggle.rs-btn {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    width: 282px;
+}
+
+.rs-picker-rtl .rs-picker-toggle {
+    position: relative;
+    z-index: 5;
+    padding-right: 67px;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    color: #00b4d8;
+    border: 1px solid #e5e5ea;
+    padding-left: 44px;
+}
+
+/* ok button style 
+.rs-picker-toolbar-right-btn-ok { 
+    text-align: center; 
+    cursor: pointer;
+    outline: 0 ; 
+    border: none; 
+    padding: 8px 12px; 
+    font-size: 14px; 
+    border-radius: 30px;
+    color: #fff;
+    background-color: #00b4d8;
+    width: 100px !important;
+}
+*/

@@ -31,6 +31,13 @@ const navigation = [
         shown: true
     },
     {
+        title: "Preferences",
+        path: "/preferences",
+        icon: plan,
+        iconColour: planColour,
+        shown: true
+    },
+    {
         title: "Explore",
         path: "/explore",
         icon: explore,
