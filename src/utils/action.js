@@ -81,3 +81,138 @@ export const login = async (previousState, formData) => {
     }
 }
 
+export const saveLocationToDB = async (location, email) => {
+    const client = await ConnectionDB
+    await client.db("places").collection("savedPlaces").findOneAndUpdate(
+        { email: email },
+        { $push: { locations: location } },
+        { upsert: true }
+    )
+}
+
+export const unsaveLocationDB = async (id, email) => {
+    const client = await ConnectionDB
+    await client.db("places").collection("savedPlaces").findOneAndUpdate(
+        { email: email },
+        { $pull: { locations: { id: id } } },
+    )
+}
+
+export const locationSaved = async (id, email) => {
+    const client = await ConnectionDB
+    const location = await client.db("places").collection("savedPlaces").findOne({
+        $and: [
+            { email: email },
+            { locations: { $elemMatch: { id: id } } }
+        ]
+    })
+    if (location) return true
+    return false
+}
+
+export const getSavedLocation = async (id, email) => {
+    //query for user's saved location with id
+    const query = {
+        email: email,
+        "locations.id": id             
+    }
+
+    //alternative to query or project for location Object by id in locations array
+    // { locations: { $elemMatch: { id: id } } } 
+
+    const options = {
+        //include only matched location in returned document
+        projection: {
+            "locations.$": 1 
+        }
+    }
+    
+    const client = await ConnectionDB
+    const location = await client.db("places").collection("savedPlaces").findOne(query, options)
+    
+    //return location Object from locations array
+    return location?.locations?.[0]
+}
+
+export const createItinerary = async (email, country, startDate, endDate) => {
+    const client = await ConnectionDB
+    const days = []
+    let date = new Date(2024, 6, 1)
+    const end = new Date(date).setDate(date.getDate() + 5)
+
+    for(let i = 0; date < end; i++) {
+        days[i] = {
+            date: date.toDateString(),
+            locations: []
+        }
+        date.setDate(date.getDate() + 1)
+    }
+
+    //to be modified to include "place" param
+    await client.db("places").collection("itinerary").insertOne({
+        email: email,
+        trips: [
+            { 
+                trip: "Tokyo",
+                startDate: startDate,
+                endDate: endDate,
+                days: days
+            },
+            { 
+                trip: "Osaka",
+                startDate: startDate,
+                endDate: endDate,
+                days: days
+            }
+        ]    
+    })
+}
+
+export const addLocationToItinerary = async (location, trip, email, date) => {
+    const client = await ConnectionDB
+    await client.db("places").collection("itinerary").findOneAndUpdate(
+        { email: email, trips: { $elemMatch: { trip: trip, days: { $elemMatch: { date: date } } } } },
+        { $push: { "trips.$.days.$[day].locations": location } },
+        { arrayFilters: [ { "day.date": date }]}
+    )
+    await locationInItineraryByDate(location.id, email, date)
+}
+
+export const removeLocationFromItinerary = async (id, trip, email, date) => {
+    const client = await ConnectionDB
+    await client.db("places").collection("itinerary").findOneAndUpdate(
+        { email: email, trips: { $elemMatch: { trip: trip, days: { $elemMatch: { date: date } } } } },
+        { $pull: { "trips.$.days.$[day].locations": { id: id } } },
+        { arrayFilters: [ { "day.date": date }]}
+    )
+}
+
+export const locationInItinerary = async (id, email) => {
+    const client = await ConnectionDB
+    const location = await client.db("places").collection("itinerary").findOne({
+            email: email,
+            "trips.days.locations": { $elemMatch: { id: id } } 
+    })
+    if (location) return true
+    return false
+}
+
+export const locationInItineraryByDate = async (id, trip, email, date) => {
+    const client = await ConnectionDB
+    const location = await client.db("places").collection("itinerary").findOne({
+         email: email, trips: { $elemMatch: { trip: trip, days: { $elemMatch: { date: date , "locations.id": id } } } }
+    })
+    if (location) return true
+    return false
+}
+
+export const getTrips =  async (email) => {
+    const client = await ConnectionDB
+    const trips = await client.db("places").collection("itinerary").findOne({
+            email: email, 
+    })
+    //return array of trips
+    return trips?.trips
+}
+
+

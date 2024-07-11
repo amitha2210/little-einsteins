@@ -29,3 +29,15 @@ export const getUserByEmail = async (email) => {
   const user = await client.db("credentials").collection("credentials").findOne({ "email": email})
   return user
 }
+
+export const getSavedLocations = async (email) => {
+  client = await clientPromise
+  const savedLocations = await client.db("places").collection("savedPlaces").findOne({ email: email})
+  return savedLocations?.locations
+}
+
+export const getItinerary = async (email) => {
+  client = await clientPromise
+  const itinerary = await client.db("places").collection("itinerary").findOne({ email: email})
+  return itinerary?.locations
+}
