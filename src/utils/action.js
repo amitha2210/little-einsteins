@@ -134,38 +134,46 @@ export const getSavedLocation = async (id, email) => {
     return location?.locations?.[0]
 }
 
-export const createItinerary = async (email, country, startDate, endDate) => {
-    const client = await ConnectionDB
-    const days = []
-    let date = new Date(2024, 6, 1)
-    const end = new Date(date).setDate(date.getDate() + 5)
+export const createItinerary = async (email, selectedDates, previousState, formData) => {
 
-    for(let i = 0; date < end; i++) {
-        days[i] = {
-            date: date.toDateString(),
-            locations: []
-        }
-        date.setDate(date.getDate() + 1)
-    }
+    if (!selectedDates) return "Please select trip dates" 
+    try {
+        const { tripName } = Object.fromEntries(formData)
+        const startDate = selectedDates[0]
+        const endDate = selectedDates[1]
 
-    //to be modified to include "place" param
-    await client.db("places").collection("itinerary").insertOne({
-        email: email,
-        trips: [
-            { 
-                trip: "Tokyo",
-                startDate: startDate,
-                endDate: endDate,
-                days: days
-            },
-            { 
-                trip: "Osaka",
-                startDate: startDate,
-                endDate: endDate,
-                days: days
+        const client = await ConnectionDB
+        const days = []
+        let date = new Date(startDate)
+        const end = endDate
+
+        for(let i = 0; date <= end; i++) {
+            days[i] = {
+                date: date.toDateString(),
+                locations: []
             }
-        ]    
-    })
+            date.setDate(date.getDate() + 1)
+        }
+
+        const trip = { 
+            trip: tripName,
+            startDate: startDate.toDateString(),
+            endDate: endDate.toDateString(),
+            days: days
+        }
+
+        //to be modified to include "place" param
+        await client.db("places").collection("itinerary").findOneAndUpdate(
+            { email: email },
+            { $push: { trips: trip } },
+            { upsert: true }  
+        )
+
+    } catch(error) {
+        console.log(error)
+        return "Something went wrong"
+    }
+    return "Itinerary created"
 }
 
 export const addLocationToItinerary = async (location, trip, email, date) => {

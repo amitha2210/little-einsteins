@@ -13,10 +13,10 @@ const TripCard = ({ trip, location, email, setAddedToItinerary }) => {
                             
         <button 
             onClick={() => setShowDates(!showDates)} 
-            className="flex text-lg py-1 px-2 text-slate-600 font-semibold rounded-xl border-2 border-slate-300 shadow-sm"
+            className="flex text-md py-1 px-2 text-slate-600 rounded-xl border border-slate-300 shadow-sm"
         >
             {trip.trip}
-            <Image src={showDates ? dropUpArrow : dropDownArrow} alt="show dates" />
+            <Image src={showDates ? dropUpArrow : dropDownArrow} height={24} width={24} alt="show dates" />
         </button>
 
         <div className={`${showDates ? "" : "hidden"} mt-4 py-1 flex flex-wrap space-x-3`}>

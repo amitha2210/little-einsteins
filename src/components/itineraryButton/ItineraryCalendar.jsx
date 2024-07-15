@@ -3,53 +3,84 @@ import close from "@/assets/close.svg"
 
 import { createItinerary, getTrips } from "@/utils/action"
 import { useEffect, useState } from "react"
+import { useFormState } from "react-dom"
 import Image from "next/image"
 import TripCard from "./TripCard"
+import { DateRangePicker } from 'rsuite';
+import 'rsuite/DateRangePicker/styles/index.css';
 
 const ItineraryCalendar = ({ open, setOpen, setAddedToItinerary, email, location }) => {
-    
+        
     const [trips, setTrips] = useState(null)
-    const [createdNewItinerary, setCreatedNewItinerary] = useState(false)
+    const [selectedDates, setSelectedDates] = useState(null)
+    const [addedToDB, addToDB] = useFormState(createItinerary.bind(null, email, selectedDates), null)
 
     useEffect(() => {
         const func = async () => {
             const trips = await getTrips(email)
             setTrips(trips)
-
         }
         func()  
-    }, [createdNewItinerary])
+    }, [addedToDB])
 
   return (
     <>
         {open &&
-            <div className="fixed flex h-screen w-screen top-0 right-0 items-center justify-center z-50">
-                <div className="relative flex flex-col w-5/12 h-2/6 overflow-auto p-3 bg-white border-4 border-slate-100 shadow-lg rounded-3xl space-y-1 items-center">
-                    
-                    <button 
-                        onClick={() => setOpen(false)}
-                        className="absolute top-3 right-3 p-1.5 border border-slate-300 rounded-full shadow-xl"
-                    >
-                        <Image src={close} height={20} width={20} alt="close menu" />
-                    </button>
-                    
-                    {trips?.map((trip, index) => (
-                        <TripCard 
-                            key={index} 
-                            trip={trip} 
-                            location={location} 
-                            email={email}
-                            setAddedToItinerary={setAddedToItinerary} 
-                        />
-                    ))}
-
-                    <button 
-                        onClick={() => {createItinerary(email); setCreatedNewItinerary(!createdNewItinerary)} } 
-                        className="p-2 bg-[#00b4d8] text-white font-semibold shadow-lg rounded-xl hover:bg-[#00b4d8]/90"
-                    >
+            <div className="flex flex-col size-full overflow-auto space-y-2">
+                <button 
+                    onClick={() => setOpen(false)}
+                    className="absolute top-3 right-3 p-1.5 border border-slate-300 rounded-full shadow-xl"
+                >
+                    <Image src={close} height={20} width={20} alt="close menu" />
+                </button>
+                
+                {trips?.map((trip, index) => (
+                    <TripCard 
+                        key={index} 
+                        trip={trip} 
+                        location={location} 
+                        email={email}
+                        setAddedToItinerary={setAddedToItinerary} 
+                    />
+                ))}
+                
+                <span 
+                    className="flex w-full
+                    before:w-full before:mr-5 before:m-auto before:border before:border-slate-600 
+                    after:w-full after:ml-5 after:m-auto after:border after:border-slate-600"
+                >
+                    or
+                </span>
+                <div className="p-1 py-3 z-10">
+                    <p className="p-1">Select Trip dates:</p>
+                    <DateRangePicker 
+                        format="dd-MM-yyyy"
+                        editable={true}
+                        size="sm"
+                        placement="bottomStart"
+                        onOk={(selectedDates) => setSelectedDates(selectedDates)}
+                    />
+                </div>
+                <form 
+                    action={addToDB} 
+                    className="flex flex-col p-2 space-y-2"
+                >
+                    <p>Trip Name:</p>
+                    <input type="text" name="tripName" placeholder="Tokyo" required/>
+                    {addedToDB && 
+                        <p className="p-3 w-full text-center text-blue-400">
+                            {addedToDB}
+                        </p>
+                    }
+                    <button className="p-2 bg-[#00b4d8] text-white font-semibold shadow-lg rounded-xl hover:bg-[#00b4d8]/90">
                         create new itinerary
                     </button>
-                </div>
+                    
+                </form>
+                
+
+                
+                
             </div>
         }
     </>
