@@ -5,7 +5,7 @@ import styles from "./calendar.css"
 function Dates() {
     return (
         <div className='dates-container'>
-            <p>
+            <p className='text-xl text-[#00b4d8] font-semibold'>
                 Travel dates:
             </p>
             <div className="dates">

@@ -167,11 +167,11 @@ const Destination = ({ session }) => {
 
     return (
         <>
-            <div className={`${open ? "w-7/12" : "w-full"} mt-6 flex flex-col p-4 items-center justify-center`}>
+            <div className={`${open ? "w-7/12" : "w-full"} mt-6 flex flex-col p-4`}>
                 
                 <p className="text-xl text-[#00b4d8] font-semibold">Pick your Destination</p>
                 
-                <div className="relative flex items-center justify-center space-x-12 mt-8">
+                <div className="relative flex space-x-12 mt-8">
                                    
                     <div className={`${searchAny ? "" : "hidden"} flex space-x-4`}>
                         <input type="text" onChange={handleInputChange} placeholder="Enter any location" className="p-3 w-[20rem] shadow-md border-2 rounded-3xl placeholder:text-center" ref={textSearchRef} />
@@ -258,4 +258,4 @@ const Destination = ({ session }) => {
     )
 }
 
-export default GoogleMap
+export default Destination  
