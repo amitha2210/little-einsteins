@@ -223,4 +223,16 @@ export const getTrips =  async (email) => {
     return trips?.trips
 }
 
+export const storePreferences = async (location, startDate, endDate, email) => {
+    const client = await ConnectionDB
+    const info = {
+        locations: location
+    }
+    await client.db("preferences").collection("preferences").findOneAndUpdate(
+        { email: email },
+        {$push: { information: info}},
+        { upsert: true }
+    )
+}
+
 

@@ -1,16 +1,22 @@
 "use client";
 
 import { useRef, useState } from "react";
+import React from 'react';
 import Icons from "./Icons";
+import { DateRangePicker } from 'rsuite';
+import 'rsuite/dist/rsuite.min.css';
+import styles from "./preferences.css"
+import { storePreferences } from "@/utils/action";
 
-const ActivityType = () => {
 
+const Preferences = ({session}) => {
+
+    const [inputText, setInputText] = useState('');
+    const [dateRange, setDateRange] = useState([null, null]);
     const [query, setQuery] = useState("");
     const [selected, setSelected] = useState([]);
     const [menuOpen, setMenuOpen] = useState(false);
-
     const inputRef = useRef(null);
-
 
     const tags = [
         "Active",
@@ -20,6 +26,28 @@ const ActivityType = () => {
         "Food",
         "Adventure",
       ];
+    
+    const handleInputChange = (event) => {
+        setInputText(event.target.value);
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        // Handle form submission if needed
+        alert(`Submitted text: ${inputText}`);
+    };
+
+    const handleDateChange = (range) => {
+        setDateRange(range);
+        console.log('Date Range Changed: ', range);
+    };
+    const handleSave = () => {
+        const [startDate, endDate] = dateRange;
+        console.log('Saving Preferences:', { inputText, startDate, endDate, activities: selected });
+        storePreferences({ inputText, startDate, endDate, activities: selected }, session?.user?.email);
+    };
+
+
 
     const filteredTags = tags.filter((item)=> 
         item?.toLocaleLowerCase()?.includes(query.toLocaleLowerCase()?.trim()) && 
@@ -34,7 +62,50 @@ const ActivityType = () => {
         )?.length;
 
     return (
-        <div className="bg-white h-40 mt-6 grid">
+        <div>
+        <div style={{ width: '300px', margin: '50px' }}>
+            <form onSubmit={handleSubmit} className='form-container'>
+                <label htmlFor="inputText" className='text-xl text-[#00b4d8] font-semibold'>Enter your destination</label>
+                <br />
+                <input
+                    type="text"
+                    id="inputText"
+                    className='input-with-grey-outline'
+                    value={inputText}
+                    onChange={handleInputChange}
+                    style={{ width: '100%', padding: '8px', margin: '10px 0' }}
+                />
+                <button 
+                type="submit" 
+                style={{ 
+                    padding: '8px 12px', 
+                    backgroundColor: '#00b4d8', 
+                    color: '#fff', 
+                    border: 'none', 
+                    borderRadius: '4px' }}
+                >
+                    Confirm
+                </button>
+                
+            </form>
+      </div>
+
+        
+      <div style={{margin: '50px'}} className='dates-container'>
+            <p className='text-xl text-[#00b4d8] font-semibold'>
+                Travel dates:
+            </p>
+            <div className="dates">
+                <DateRangePicker 
+                onChange={handleDateChange}
+                value={dateRange}
+                />
+
+            </div>
+        
+        </div>
+
+        <div style={{margin: '50px'}} className="bg-white h-40 mt-6 grid">
 
             <p className="text-xl text-[#00b4d8] font-semibold">Types of activities</p>
 
@@ -79,7 +150,7 @@ const ActivityType = () => {
                         placeholder="Add"
                         className="bg-transparent text=sm flex-1 caret-rose-600"
                         onFocus={() => setMenuOpen(true)}
-                        onBlur={() => setrMenuOpen(false)}
+                        onBlur={() => setMenuOpen(false)}
                         onKeyDown={(e)=> {
                             if(e.key === 'Enter' && !isDisable) {
                                 setSelected((prev)=> [...prev, query]);
@@ -87,7 +158,6 @@ const ActivityType = () => {
                                 setMenuOpen(true);
                             }
                         }}
-
                     />
                     <button 
                         className="text-sm disable:text-grey-300 text-[#00b4d8] disabled:cursor-not-allowed" 
@@ -131,7 +201,22 @@ const ActivityType = () => {
                 ): null}
             </div>
         </div>
+        <div className="flex justify-center">
+            <button 
+                type="submit" 
+                style={{ 
+                    padding: '8px 12px', 
+                    backgroundColor: '#00b4d8', 
+                    color: '#fff', 
+                    border: 'none', 
+                    borderRadius: '4px' }}
+                    onClick={handleSave}>
+                        Save
+                </button>
+        </div>
+        </div>
     )
+
 }
 
-export default ActivityType
+export default Preferences

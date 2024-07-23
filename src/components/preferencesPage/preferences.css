@@ -1,3 +1,18 @@
+.form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 50px auto;
+    width: 300px;
+  }
+
+.input-with-grey-outline {
+    border: 1px solid grey;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box; /* Ensures padding is included in the width */
+  }
+
 .dates-container {
     display: flex;
     align-items: center;
@@ -12,7 +27,7 @@
     text-align: center;
     padding-top: 30px;
 }
-
+  
 /*
 .re-picker-rtl .rs-picker-toggle.rs-btn {
     padding-top: 7px;
