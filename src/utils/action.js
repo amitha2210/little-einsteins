@@ -338,3 +338,16 @@ export const findTripCoverPic = async (email, trip) => {
 
 }
 
+export const storePreferences = async (location, startDate, endDate, email) => {
+    const client = await ConnectionDB
+    const info = {
+        locations: location
+    }
+    await client.db("preferences").collection("preferences").findOneAndUpdate(
+        { email: email },
+        {$push: { information: info}},
+        { upsert: true }
+    )
+}
+
+

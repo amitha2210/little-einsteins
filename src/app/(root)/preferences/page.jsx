@@ -1,23 +1,19 @@
 import React from 'react'
 import GoogleMap from "@/components/googleMap/GoogleMap"
 import { auth } from "@/utils/auth/auth"
-import Dates from '@/components/preferencesPage/calendar/calender'
-import Destination from '@/components/preferencesPage/destination/destination'
-import ActivityType from '@/components/preferencesPage/activityType/activityType'
+import Preferences from '@/components/preferencesPage/preferences'
 
 
-async function Preferences() {
+async function preferencesPage() {
 
   const session = await auth()
   
   return (
     <div>
-      <Destination session={session}/>
-     <Dates />
-     <ActivityType />
+      <Preferences />
     </div>
   )
 }
 
-export default Preferences
+export default preferencesPage
 
