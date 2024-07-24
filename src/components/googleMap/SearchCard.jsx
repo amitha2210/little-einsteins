@@ -11,6 +11,7 @@ import dropDownArrow from "@/assets/drop-down-arrow.svg"
 import dropUpArrow from "@/assets/drop-up-arrow.svg"
 import checkIcon from "@/assets/check.svg"
 import addIcon from "@/assets/add.svg"
+import openingHoursIcon from "@/assets/openinghours.svg"
 
 import Image from "next/image"
 import { saveLocationToDB, locationSaved, unsaveLocationDB } from "@/utils/action"
@@ -23,7 +24,7 @@ function isPopular(rating, userRatingCount) {
     return false
 }
 
-const ResultContainer = ({ id, name, address, description, rating, userRatingCount, googleMapLink, placeImg, session }) => {
+const SearchCard = ({ id, name, address, description, rating, userRatingCount, googleMapLink, regularOpeningHours, placeImg, session }) => {
 
     const location = {
         id: id,
@@ -33,6 +34,7 @@ const ResultContainer = ({ id, name, address, description, rating, userRatingCou
         rating: rating,
         userRatingCount: userRatingCount,
         googleMapLink: googleMapLink,
+        regularOpeningHours: regularOpeningHours,
         placeImg: placeImg
     }
                        
@@ -89,9 +91,26 @@ const ResultContainer = ({ id, name, address, description, rating, userRatingCou
                         </tr>
                         <tr className={`${seeDetails ? "" : "hidden"}`}> 
                             <td className="flex p-2 h-fit size-16 justify-center">
-                                <Image src={ratingsIconColoured} height={24} width={24} alt="descriptionIcon"/>
+                                <Image src={ratingsIconColoured} height={24} width={24} alt="details icon"/>
                             </td>
-                            <td className="p-1 text-sm">{rating} ({userRatingCount})</td>
+                            <td className="p-1 text-sm">{rating} {userRatingCount && `(${userRatingCount})` }</td>
+                        </tr>
+                        <tr className={`${seeDetails ? "" : "hidden"}`}> 
+                            <td className="flex p-2 h-fit size-16 justify-center">
+                                <Image src={openingHoursIcon} height={24} width={24} alt="opening hours icon"/>
+                            </td>
+                            <td className="p-1 text-sm">
+                                {typeof regularOpeningHours === "string" ?
+                                    regularOpeningHours
+                                    :
+                                    regularOpeningHours.map((day, index) => (
+                                        <p key={index}>
+                                            {day}
+                                        </p>
+                                    ))
+                                }
+                            </td>
+                            
                         </tr>
                     </tbody>
                 </table>
@@ -141,4 +160,4 @@ const ResultContainer = ({ id, name, address, description, rating, userRatingCou
     )
 }
 
-export default ResultContainer
+export default SearchCard

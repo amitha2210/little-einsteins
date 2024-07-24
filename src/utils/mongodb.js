@@ -39,5 +39,7 @@ export const getSavedLocations = async (email) => {
 export const getItinerary = async (email) => {
   client = await clientPromise
   const itinerary = await client.db("places").collection("itinerary").findOne({ email: email})
-  return itinerary?.locations
+  
+  //array of trips
+  return itinerary?.trips
 }

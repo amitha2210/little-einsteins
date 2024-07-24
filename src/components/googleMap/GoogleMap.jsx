@@ -89,7 +89,17 @@ const GoogleMap = ({ session }) => {
         if (autoComplete) {
             autoComplete.addEventListener("gmp-placeselect", async ({ place }) => {
                 await place.fetchFields({
-                    fields: ["displayName", "editorialSummary", "formattedAddress", "googleMapsURI", "location", "photos", "rating", "userRatingCount"],
+                    fields: [
+                        "displayName", 
+                        "editorialSummary", 
+                        "formattedAddress", 
+                        "googleMapsURI", 
+                        "location", 
+                        "photos", 
+                        "rating", 
+                        "userRatingCount",
+                        "regularOpeningHours"
+                    ],
                 });
                 setSelectedPlace(place)
                 setMarker(place.location, place.displayName)
@@ -159,7 +169,17 @@ const GoogleMap = ({ session }) => {
 
         //search request
         const textSearchRequest =  {
-            fields: ["displayName", "editorialSummary", "formattedAddress", "googleMapsURI", "location", "photos", "rating", "userRatingCount"],
+            fields: [
+                "displayName", 
+                "editorialSummary", 
+                "formattedAddress", 
+                "googleMapsURI", 
+                "location", 
+                "photos", 
+                "rating", 
+                "userRatingCount", 
+                "regularOpeningHours"
+            ],
             textQuery: searchQuery,
             locationBias: japanBounds,
             language: "en",
@@ -229,6 +249,7 @@ const GoogleMap = ({ session }) => {
                                 rating={selectedPlace.rating || "No ratings yet"}
                                 userRatingCount={selectedPlace.userRatingCount}
                                 googleMapLink={selectedPlace.googleMapsURI}
+                                regularOpeningHours={selectedPlace.regularOpeningHours}
                                 placeImg={selectedPlace.photos?.[0]?.getURI()} 
                                 session={session} 
                             />
@@ -256,6 +277,7 @@ const GoogleMap = ({ session }) => {
                                 rating={result.rating || "No ratings yet"}
                                 userRatingCount={result.userRatingCount}
                                 googleMapLink={result.googleMapsURI}
+                                regularOpeningHours={result.regularOpeningHours?.weekdayDescriptions || "Opening hours not available"}
                                 placeImg={result.photos?.[0]?.getURI()} 
                                 session={session}
                             />

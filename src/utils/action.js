@@ -134,9 +134,15 @@ export const getSavedLocation = async (id, email) => {
     return location?.locations?.[0]
 }
 
+export const getSavedLocations = async (email) => {
+    const client = await ConnectionDB
+    const savedLocations = await client.db("places").collection("savedPlaces").findOne({ email: email})
+    return savedLocations?.locations
+}
+  
 export const createItinerary = async (email, selectedDates, previousState, formData) => {
 
-    if (!selectedDates) return "Please select trip dates" 
+    if (!selectedDates) return { message: "Please select trip dates" } 
     try {
         const { tripName } = Object.fromEntries(formData)
         const startDate = selectedDates[0]
@@ -156,7 +162,7 @@ export const createItinerary = async (email, selectedDates, previousState, formD
         }
 
         const trip = { 
-            trip: tripName,
+            trip: tripName.charAt(0).toUpperCase() + tripName.slice(1),
             startDate: startDate.toDateString(),
             endDate: endDate.toDateString(),
             days: days
@@ -171,19 +177,31 @@ export const createItinerary = async (email, selectedDates, previousState, formD
 
     } catch(error) {
         console.log(error)
-        return "Something went wrong"
+        return { message: "Something went wrong"}
     }
-    return "Itinerary created"
+    return { message: "Itinerary created" }
+}
+
+export const removeTripFromDB = async (tripName, email) => {
+    const client = await ConnectionDB
+    const location = await client.db("places").collection("itinerary").findOneAndUpdate(
+        { email: email, trips: { $elemMatch: { trip: tripName } } },
+        { $pull: { "trips": { trip: tripName  } } },
+        { returnDocument: "after" }
+    )
+    return location?.trips
 }
 
 export const addLocationToItinerary = async (location, trip, email, date) => {
+    const locationWithTime = { time: new Date(date), ...location}
+    console.log(locationWithTime)
     const client = await ConnectionDB
     await client.db("places").collection("itinerary").findOneAndUpdate(
         { email: email, trips: { $elemMatch: { trip: trip, days: { $elemMatch: { date: date } } } } },
-        { $push: { "trips.$.days.$[day].locations": location } },
+        { $push: { "trips.$.days.$[day].locations": locationWithTime } },
         { arrayFilters: [ { "day.date": date }]}
     )
-    await locationInItineraryByDate(location.id, email, date)
+    //await setLocationItineraryTime(location.id, trip, email, date)
 }
 
 export const removeLocationFromItinerary = async (id, trip, email, date) => {
@@ -214,6 +232,40 @@ export const locationInItineraryByDate = async (id, trip, email, date) => {
     return false
 }
 
+export const setLocationItineraryTime = async (id, trip, email, date, time) => {
+    const client = await ConnectionDB
+    const location = await client.db("places").collection("itinerary").findOneAndUpdate(
+    {
+        email: email, 
+        trips: { 
+            $elemMatch: { 
+                trip: trip, 
+                days: { 
+                    $elemMatch: { 
+                        date: date, 
+                        locations: {
+                            $elemMatch: {
+                                id: id
+                            }
+                        } 
+                    } 
+                } 
+            } 
+        }
+    },
+    {
+        $set: {
+            "trips.$.days.$[day].locations.$[location].time": new Date()
+        }
+    },
+    {
+        arrayFilters: [
+            { "location.id": id }, { "day.date": date }
+        ]
+    })
+   console.log(location)
+}
+
 export const getTrips =  async (email) => {
     const client = await ConnectionDB
     const trips = await client.db("places").collection("itinerary").findOne({
@@ -223,4 +275,66 @@ export const getTrips =  async (email) => {
     return trips?.trips
 }
 
+export const findTripCoverPic = async (email, trip) => {
+    const client = await ConnectionDB
+    const query = {
+        email: email,  
+    }             
+    
+    const options = {
+        projection: {
+            trips: {
+                $elemMatch: {
+                    trip: trip,
+                    days: {
+                        $elemMatch: {
+                            locations: { $ne: [] }
+                        }
+                    }
+                }
+            }            
+        }
+    }
+    // const trips = await client.db("places").collection("itinerary").findOne(query, options)
+    // console.log(trips)
+    // const location = trips?.trips?.[0]?.days.filter((day) => day.locations.length != 0)
+    // console.log(location?.[0]?.locations?.[0])
+    const location = await client.db("places").collection("itinerary").aggregate([
+        {
+            $match: { email: email, "trips.trip": trip }
+        }, {
+            $project: {
+                trips: {
+                    $filter: {
+                        input: "$trips",
+                        as: "trip",
+                        cond: { $eq: ["$$trip.trip", trip]}
+                    }
+                }
+            }
+        }, {
+            $project: {
+                trips: {
+                    $map: {
+                        input: "$trips",
+                        as: "trip",
+                        in: {
+                            trip: "$$trip.trip",
+                            days: {
+                                $filter: {
+                                    input: "$$trip.days",
+                                    as: "days",
+                                    cond: { $ne: ["$$days.locations", []]}
+                                }
+                            }
+                        }
+                    }
+                }   
+            }
+        }
+    ]).toArray()
+
+    return location[0].trips[0].days[0]?.locations?.[0]?.placeImg
+
+}
 
