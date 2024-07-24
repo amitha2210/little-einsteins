@@ -25,14 +25,14 @@ function formatDate(date) {
     return day + ", " + num + " " + month 
 }
 
-const TripDetails = ({ email, trip, selectedTrip }) => {
+const TripDetails = ({ email, trip, setChangeLocation }) => {
 
     const [scrollToDate, setScrollToDate] = useState(null)
+    
 
     useEffect(() => {
         setScrollToDate(trip.days?.[0].date)
     }, [trip])
-
 
   return (
     <div className="w-full pb-10">
@@ -40,7 +40,7 @@ const TripDetails = ({ email, trip, selectedTrip }) => {
             Trip to {trip.trip}
         </h1>
         <div className="w-full flex px-5 ">
-            <div className="sticky top-[11rem] h-[calc(100vh-15rem)] overflow-y-auto scrollbar-none flex flex-col w-[8rem] px-2 space-y-4 border-r">
+            <div className="sticky top-[11rem] h-[calc(100vh-15rem)] overflow-y-auto scrollbar-none flex flex-col w-[8rem] p-2 space-y-4 border-r">
                 <p className="flex justify-center text-lg font-semibold text-slate-600">
                     Itinerary
                 </p>
@@ -75,10 +75,10 @@ const TripDetails = ({ email, trip, selectedTrip }) => {
                         </div>
                 ))}
             </div> */}
-            <div className="w-full space-y-10 pl-7">
+            <div className="w-full space-y-8 pl-5">
                 {trip?.days?.map((day, index) => (
                     <Element key={index} name={day.date.split(" ").join("")}>
-                        <div className="py-6 border-b-2 border-slate-200 space-y-4">
+                        <div className="py-6 border-b-2 border-slate-200 space-y-6">
                             <p className="text-2xl text-slate-700 font-semibold">
                                 {formatDate(day.date)}
                             </p>
@@ -92,6 +92,9 @@ const TripDetails = ({ email, trip, selectedTrip }) => {
                                         <LocationCard
                                             email={email}
                                             location={location}
+                                            trip={trip}
+                                            date={day.date}
+                                            setChangeLocation={setChangeLocation}
                                         />
                                     </div>
                             ))}

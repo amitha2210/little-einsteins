@@ -15,7 +15,7 @@ export default async function run(previousState, formData) {
   const result = await model.generateContent(prompt);
   const response = result.response;
   const text = response.text();
- 
+
   console.log(text);
   return text;
 }

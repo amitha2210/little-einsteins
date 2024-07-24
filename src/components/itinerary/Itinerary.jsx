@@ -10,6 +10,7 @@ const Itinerary = ({ email, session }) => {
     const [trips, setTrips] = useState(null)
     const [showTripDetails, setShowTripDetails] = useState(null)
     const [savedLocations, setSavedLocations] = useState(null)
+    const [changeLocation, setChangeLocation] = useState(null)
 
     useEffect(() => {
         const func = async () => {
@@ -18,11 +19,30 @@ const Itinerary = ({ email, session }) => {
             setTrips(db)
             setShowTripDetails(db?.[0])
             
+        }
+        func()    
+    }, [email])
+
+    useEffect(() => {
+        const func = async () => {
             const saved = await getSavedLocations(email)
             setSavedLocations(saved)
         }
         func()    
     }, [email])
+
+    useEffect(() => {
+        const func = async () => {
+            const db = await getTrips(email)
+            setTrips(db)
+            const trip = db.find(trip => trip.trip == changeLocation?.trip)
+            setShowTripDetails(trip) 
+        }
+        
+        if (changeLocation) {
+            func()
+        }  
+    }, [changeLocation])
 
     return (
         <>
@@ -54,10 +74,11 @@ const Itinerary = ({ email, session }) => {
                         email={email}
                         trip={showTripDetails}
                         selectedTrip={showTripDetails}
+                        setChangeLocation={setChangeLocation}
                     />
                 }
                 <div className="sticky top-[6rem] w-9/12 h-[calc(100vh-7rem)] border-l overflow-auto scrollbar-none">
-                    <h1 className="z-10 sticky flex top-0 py-6 w-full bg-white text-2xl font-bold text-[#00b4d8] justify-center">
+                    <h1 className="z-10 sticky flex top-0 py-6 w-full bg-[#ecfcff] text-2xl font-bold text-[#00b4d8] justify-center">
                         Saved places
                     </h1>
                     <div className="w-full flex flex-col px-6 items-center justify-center">

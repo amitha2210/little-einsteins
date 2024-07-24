@@ -23,7 +23,6 @@ const ItineraryCalendar = ({ open, setOpen, setAddedToItinerary, email, location
 
     useEffect(() => {
         const func = async () => {
-            console.log("HERE")
             setSelectedDates(null)
             const trips = await getTrips(email)
             setTrips(trips)
@@ -35,7 +34,13 @@ const ItineraryCalendar = ({ open, setOpen, setAddedToItinerary, email, location
   return (
     <>
         {open &&
-            <div className="absolute w-[29rem] h-[23rem] left-[3rem] border overflow-hidden pb-16 -top-12 bg-white rounded-3xl shadow-2xl">
+            <div className="absolute w-[29rem] h-[23rem] left-[3rem] -bottom-7 border pb-16 bg-white rounded-3xl shadow-2xl">
+                <button 
+                    onClick={() => setOpen(false)}
+                    className="absolute right-6 top-16"
+                >
+                    <Image src={close} height={24} width={24} alt="close menu" />
+                </button>
                 <div className="w-full flex justify-around">
                     <button 
                         onClick={() => setShowCreateNewMenu(false)}
@@ -64,10 +69,10 @@ const ItineraryCalendar = ({ open, setOpen, setAddedToItinerary, email, location
                         />
                     </button>
                 </div>
-                <div className="flex flex-col p-2 h-full overflow-auto space-y-2">          
+                <div className="flex flex-col p-2 h-full overflow-auto scrollbar-thin space-y-2">          
                     {showCreateMenu ? 
                         <div className="mt-4 px-2 space-y-6">
-                            <div className="z-10 space-y-2">
+                            <div className="space-y-2">
                                 <p className="">Select Trip dates:</p>
                                 <DateRangePicker 
                                     format="dd-MM-yyyy"
@@ -76,6 +81,7 @@ const ItineraryCalendar = ({ open, setOpen, setAddedToItinerary, email, location
                                     cleanable={true}
                                     placement="bottomStart"
                                     onOk={(selectedDates) => setSelectedDates(selectedDates)}
+                                    
                                 />
                             </div>
                             <form 
@@ -96,7 +102,7 @@ const ItineraryCalendar = ({ open, setOpen, setAddedToItinerary, email, location
                         </div>
                         :
                         <>
-                            <p className="flex p-1 justify-center items-center w-full text-xl text-slate-600 font-semibold">
+                            <p className="flex py-2 justify-center items-center w-full text-xl text-slate-600 font-semibold">
                                 Itineraries
                                 <Image src={tripIcon} height={28} width={28} alt="trip icon" className="ml-1"/>
                             </p>

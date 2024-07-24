@@ -54,12 +54,12 @@ const SearchCard = ({ id, name, address, description, rating, userRatingCount, g
     const popular = isPopular(rating, userRatingCount)
 
     return (
-        <div className="flex my-4 shadow-slate-300 shadow-md text-slate-600 w-full rounded-xl">
+        <div className="relative flex my-4 shadow-slate-300 shadow-md text-slate-600 w-full rounded-xl">
             <div className="p-3 w-7/12">
                 
-                <h1 className="p-3 text-xl font-semibold">{name}</h1>
+                <h1 className="relative -z-40 p-3 text-xl font-semibold">{name}</h1>
                 
-                <div className="flex flex-wrap ml-4 mb-4 space-x-5">
+                <div className="relative -z-40 flex flex-wrap ml-4 mb-4 space-x-5">
                     
                     <div className="flex px-3 py-1.5 bg-slate-100 text-[#00b4d8] text-sm font-semibold rounded-3xl shadow-md items-center justify-center">
                         <Image src={hikingIcon} height={20} width={20} alt="popular" />
@@ -75,7 +75,7 @@ const SearchCard = ({ id, name, address, description, rating, userRatingCount, g
 
                 </div>                 
                 
-                <table>
+                <table className="relative -z-40">
                     <tbody>
                         <tr>
                             <td className="flex p-1 h-fit size-16 justify-center">
@@ -116,21 +116,23 @@ const SearchCard = ({ id, name, address, description, rating, userRatingCount, g
                 </table>
                 
                 {seeDetails ?
-                    <button onClick={() => setSeeDetails(false) } className="flex mt-2 p-2 text-sm font-semibold items-center hover:font-bold">
+                    <button onClick={() => setSeeDetails(false) } className="relative z-0 flex mt-2 p-2 text-sm font-semibold items-center hover:font-bold">
                         Less details
                         <Image src={dropUpArrow} height={24} width={24} alt="see less details"/>
                     </button> 
                     :
-                    <button onClick={() => setSeeDetails(true) } className="flex mt-2 p-2 text-sm items-center hover:font-bold">
+                    <button onClick={() => setSeeDetails(true) } className="relative z-0 flex mt-2 p-2 text-sm items-center hover:font-bold">
                         More details
                         <Image src={dropDownArrow} height={24} width={24} alt="see more details"/>
                     </button>
                 }
 
                 <div className="flex items-center mt-4 space-x-5">
-                    <p className="w-fit text-xs p-2 px-3 border shadow-sm rounded-xl">
-                        <a href={googleMapLink}>Open in Google Maps</a>
-                    </p>
+                    
+                    <a className="w-fit text-xs p-2 px-3 border shadow-sm rounded-xl" href={googleMapLink}>
+                        Open in Google Maps
+                    </a>
+                    
                     
                     {session && 
                         (saved ?
@@ -153,7 +155,7 @@ const SearchCard = ({ id, name, address, description, rating, userRatingCount, g
                 </div>
             </div>
             
-            <div className="relative w-5/12 -z-50 rounded-xl">
+            <div className="relative w-5/12 rounded-xl -z-50">
                 <Image src={location.placeImg} fill={true} alt="place image" style={{objectFit: "cover"}} sizes="" className="rounded-r-xl"/>
             </div>     
         </div>

@@ -196,10 +196,10 @@ export const addLocationToItinerary = async (location, trip, email, date) => {
     const locationWithTime = { time: new Date(date), ...location}
     console.log(locationWithTime)
     const client = await ConnectionDB
-    await client.db("places").collection("itinerary").findOneAndUpdate(
+    const itinerary = await client.db("places").collection("itinerary").findOneAndUpdate(
         { email: email, trips: { $elemMatch: { trip: trip, days: { $elemMatch: { date: date } } } } },
         { $push: { "trips.$.days.$[day].locations": locationWithTime } },
-        { arrayFilters: [ { "day.date": date }]}
+        { arrayFilters: [ { "day.date": date }] }
     )
     //await setLocationItineraryTime(location.id, trip, email, date)
 }
@@ -211,6 +211,7 @@ export const removeLocationFromItinerary = async (id, trip, email, date) => {
         { $pull: { "trips.$.days.$[day].locations": { id: id } } },
         { arrayFilters: [ { "day.date": date }]}
     )
+    return { trip: trip }
 }
 
 export const locationInItinerary = async (id, email) => {
@@ -264,6 +265,14 @@ export const setLocationItineraryTime = async (id, trip, email, date, time) => {
         ]
     })
    console.log(location)
+}
+
+export const changeLocationDateItinerary = async (location, trip, email, currDate, newDate) => {
+    
+    await removeLocationFromItinerary(location.id, trip, email, currDate)
+    await addLocationToItinerary(location, trip, email, newDate)
+    
+    return { trip: trip }
 }
 
 export const getTrips =  async (email) => {
@@ -345,7 +354,7 @@ export const storePreferences = async (location, startDate, endDate, email) => {
     }
     await client.db("preferences").collection("preferences").findOneAndUpdate(
         { email: email },
-        {$push: { information: info}},
+        { $push: { information: info}},
         { upsert: true }
     )
 }

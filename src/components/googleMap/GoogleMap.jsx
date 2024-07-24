@@ -282,7 +282,7 @@ const GoogleMap = ({ session }) => {
                                 session={session}
                             />
 
-                            <div className="relative w-7/12">
+                            <div className="-z-20 relative w-7/12">
                                 <button onClick={() => viewOnMap(result.location)} className="absolute flex flex-col right-4 bottom-8 items-center text-white text-xs hover:text-slate-600">
                                     view on map
                                     <Image src={pinonmap} height={30} width={30} alt="view on map"/>
