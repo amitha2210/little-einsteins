@@ -60,7 +60,8 @@ const Navbar = async () => {
     
     return (
         <nav className="sticky flex flex-row top-0 p-5 justify-center items-center
-        border-b-[0.25px] border-slate-300 z-50 bg-white">
+            border-b-[0.25px] border-slate-300 z-50 bg-white h-24"
+        >
 
             <Link href="/" alt="landing page" className="absolute left-[5rem]">
                 <div className="flex items-center">

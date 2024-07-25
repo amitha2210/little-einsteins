@@ -1,7 +1,10 @@
+import BigCalendar from "@/components/BigCalender"
 
 const Account = () => {
   return (
-    <div>Accounts</div>
+    <div>
+      <BigCalendar />
+    </div>
   )
 }
 

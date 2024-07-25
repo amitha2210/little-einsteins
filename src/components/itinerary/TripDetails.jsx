@@ -2,6 +2,9 @@
 import { useEffect, useState } from "react"
 import LocationCard from "./LocationCard"
 import { Element, scroller } from "react-scroll"
+import { removeTripFromDB } from "@/utils/action"
+import deleteIcon from "@/assets/delete.svg"
+import Image from "next/image"
 
 function formatDate(date) {
     const num = date.slice(8, 10)
@@ -25,19 +28,33 @@ function formatDate(date) {
     return day + ", " + num + " " + month 
 }
 
-const TripDetails = ({ email, trip, setChangeLocation }) => {
+const TripDetails = ({ email, trip, setChangeLocation, setTrips, setShowTripDetails }) => {
 
     const [scrollToDate, setScrollToDate] = useState(null)
     
+    const removeTrip = () => {
+        const func = async () => {
+            const updatedTrips = await removeTripFromDB(trip.trip, email)
+            setTrips(updatedTrips)
+            setShowTripDetails(updatedTrips?.[0])            
+        }
+        func() 
+    }
 
     useEffect(() => {
         setScrollToDate(trip.days?.[0].date)
     }, [trip])
 
   return (
-    <div className="w-full pb-10">
-        <h1 className="z-10 sticky top-[6rem] py-5 px-7 bg-white text-4xl font-bold text-[#00738a]">
+    <div className="pb-10">
+        <h1 className="z-10 w-fit rounded-r-xl sticky top-[6rem] flex p-6 bg-white text-4xl font-bold text-[#00738a]">
             Trip to {trip.trip}
+            <button 
+                onClick={() => removeTrip()}
+                className="ml-7 p-2 rounded-lg bg-slate-100 hover:bg-slate-200"
+            >
+                <Image src={deleteIcon} height={26} width={26} alt="delete trip" />
+            </button>
         </h1>
         <div className="w-full flex px-5 ">
             <div className="sticky top-[11rem] h-[calc(100vh-15rem)] overflow-y-auto scrollbar-none flex flex-col w-[8rem] p-2 space-y-4 border-r">
@@ -64,18 +81,8 @@ const TripDetails = ({ email, trip, setChangeLocation }) => {
                     </button>
                 ))}
             </div>
-            {/* <div className="w-1/2">
-                {showLocations &&     
-                    showLocations.locations?.map((location, index) => (
-                        <div key={index}>
-                            <LocationCard
-                                email={email}
-                                location={location}
-                            />
-                        </div>
-                ))}
-            </div> */}
-            <div className="w-full space-y-8 pl-5">
+            
+            <div className="w-full space-y-8 pl-10 pr-2">
                 {trip?.days?.map((day, index) => (
                     <Element key={index} name={day.date.split(" ").join("")}>
                         <div className="py-6 border-b-2 border-slate-200 space-y-6">

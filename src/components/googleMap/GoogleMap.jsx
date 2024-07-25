@@ -16,8 +16,6 @@ const lib = ["core", "maps", "places", "marker"]
 
 const GoogleMap = ({ session }) => {
     
-    //console.log("render google maps")
-    
     let marker;
     const mapRef = useRef(null)
     const autoCompleteRef = useRef(null)
@@ -119,7 +117,7 @@ const GoogleMap = ({ session }) => {
         })
         const init = '<div style="background-color:white"> Hello </div>'
 
-        if (marker) {
+        if (marker?.map) {
             marker.map = null
         }
 
@@ -197,7 +195,7 @@ const GoogleMap = ({ session }) => {
     }
 
     return (
-        <>
+        <div className="flex">
             <div className={`${open ? "w-7/12" : "w-full"} mt-6 flex flex-col p-4 items-center justify-center`}>
                 
                 <p className="text-4xl text-[#00b4d8] font-semibold">Explore Travel Destinations</p>
@@ -245,13 +243,16 @@ const GoogleMap = ({ session }) => {
                                 id={selectedPlace.id}
                                 name={selectedPlace.displayName}
                                 address= {selectedPlace.formattedAddress}
-                                description={result.editorialSummary || "Description not Available"}
+                                description={selectedPlace.editorialSummary || "Description not Available"}
                                 rating={selectedPlace.rating || "No ratings yet"}
                                 userRatingCount={selectedPlace.userRatingCount}
                                 googleMapLink={selectedPlace.googleMapsURI}
                                 regularOpeningHours={selectedPlace.regularOpeningHours}
-                                placeImg={selectedPlace.photos?.[0]?.getURI()} 
-                                session={session} 
+                                placeImg={selectedPlace.photos?.[0]?.getURI()}
+                                latLng={selectedPlace.location.toJSON()} 
+                                session={session}
+                                viewOnMap={viewOnMap}
+ 
                             />
                             
                             <div className="relative w-7/12">
@@ -267,7 +268,7 @@ const GoogleMap = ({ session }) => {
 
                 {searchResult?.map((result, index) => (
                     <div key={index} className={`${searchAny ? "" : "hidden"} text-slate-600 flex w-full min-w-[30rem] justify-center`}>
-                        <div className={`${open ? "w-9/12" : "w-7/12" } relative`}>
+                        <div className={`${open ? "w-11/12" : "w-7/12" } min-w-[37rem]`}>
                             
                             <SearchCard
                                 id={result.id}
@@ -279,15 +280,10 @@ const GoogleMap = ({ session }) => {
                                 googleMapLink={result.googleMapsURI}
                                 regularOpeningHours={result.regularOpeningHours?.weekdayDescriptions || "Opening hours not available"}
                                 placeImg={result.photos?.[0]?.getURI()} 
+                                latLng={result.location.toJSON()} 
                                 session={session}
+                                viewOnMap={viewOnMap}
                             />
-
-                            <div className="-z-20 relative w-7/12">
-                                <button onClick={() => viewOnMap(result.location)} className="absolute flex flex-col right-4 bottom-8 items-center text-white text-xs hover:text-slate-600">
-                                    view on map
-                                    <Image src={pinonmap} height={30} width={30} alt="view on map"/>
-                                </button>
-                            </div>
 
                         </div>                       
                     </div>
@@ -295,13 +291,15 @@ const GoogleMap = ({ session }) => {
             </div>
             
             {(isLoaded) ? 
-                <div className={`${open ? "fixed" : "hidden"} right-3 px-3 top-[9rem] h-svh w-5/12`}>
-                    <div className="h-5/6 w-full rounded-3xl shadow-md border-none" ref={mapRef} /> 
-            </div>
+                <div className={`${open ? "" : "hidden"} w-5/12`}>
+                    <div className={`${open ? "sticky top-[6rem]" : "hidden"} h-[calc(100vh-6rem)]`}>
+                        <div className="h-full w-full shadow-md border-none" ref={mapRef} /> 
+                    </div>
+                </div>
                 : 
                 <p>Loading...</p>
             }
-        </>
+        </div>
     )
 }
 

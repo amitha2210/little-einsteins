@@ -5,7 +5,7 @@ import createNewItineraryIcon from "@/assets/create-itinerary.svg"
 import tripIcon from "@/assets/trip.svg"
 
 import { createItinerary, getTrips } from "@/utils/action"
-import { useEffect, useState, useFormStatus } from "react"
+import { useEffect, useState } from "react"
 import { useFormState } from "react-dom"
 import Image from "next/image"
 import TripCard from "./TripCard"
@@ -45,7 +45,7 @@ const ItineraryCalendar = ({ open, setOpen, setAddedToItinerary, email, location
                     <button 
                         onClick={() => setShowCreateNewMenu(false)}
                         className={`${showCreateMenu ? "" : "bg-[#00a4c4]/10"} w-1/2 flex p-3 text-[#0093b1] text-lg font-semibold 
-                            items-center justify-center border-b border-[#0093b1]`}
+                            items-center justify-center border-b border-[#0093b1] rounded-tl-3xl`}
                     >
                         <Image 
                             src={addToItineraryIcon} 
@@ -58,7 +58,7 @@ const ItineraryCalendar = ({ open, setOpen, setAddedToItinerary, email, location
                     <button 
                         onClick={() => setShowCreateNewMenu(true)}
                         className={`${showCreateMenu ? "bg-[#00a4c4]/10" : ""} w-1/2 flex p-3 text-[#0093b1] text-lg font-semibold 
-                            items-center justify-center border-b border-[#0093b1]`}
+                            items-center justify-center border-b border-[#0093b1] rounded-tr-3xl`}
                     >
                         <Image 
                             src={createNewItineraryIcon} 

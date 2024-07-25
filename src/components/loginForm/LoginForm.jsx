@@ -11,7 +11,7 @@ import close from "@/assets/close.svg"
 import app from "@/assets/app.svg"
 import { useState } from "react"
 
-function LoginForm({ loginPage }) {
+function LoginForm({ loginPage, openForm }) {
 
     const [state, formAction] = useFormState(login, null)
 
@@ -21,6 +21,11 @@ function LoginForm({ loginPage }) {
             <div className={`size-full flex flex-col justify-center items-center 
             ${loginPage ? "" : "fixed bottom-0 right-0 h-screen w-screen bg-black/40"}`} >          
                 <div className={loginPage ? styles.containerPage : styles.container}>
+                    {openForm &&
+                        <button onClick={() => openForm(false)} className="absolute top-4 right-4">
+                            <Image src={close} alt="close login form"/>
+                        </button>
+                    }
                     <Link href="/home" className="flex">
                         <Image src={app} alt="App icon" className="relative right-3"/>
                         
