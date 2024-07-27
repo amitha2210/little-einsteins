@@ -7,7 +7,6 @@ export default async function Home() {
 
   const session = await auth()
   const email = session?.user?.email
-  const savedLocations = await getSavedLocations(email)
   
   return (
     <div className="flex flex-col w-full items-center justify-center">

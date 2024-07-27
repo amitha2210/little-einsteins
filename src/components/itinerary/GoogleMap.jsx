@@ -8,11 +8,11 @@ import radioButtonChecked from "@/assets/radiobutton-checked.svg"
 import searchIcon from "@/assets/search.svg"
 
 import Image from "next/image"
-import SearchCard from "./SearchCard"
+import SavedPlacesCard from "./savedPlaces/SavedPlacesCard"
 
 const lib = ["core", "maps", "places", "marker"]
 
-const GoogleMap = ({ session }) => {
+const GoogleMap = ({ email, trip, setChangeLocation, displayMap }) => {
     
     let marker;
     const mapRef = useRef(null)
@@ -102,6 +102,33 @@ const GoogleMap = ({ session }) => {
             })
         }
     }, [autoComplete])
+
+    useEffect(() => {
+        console.log("MARKER")
+        console.log(trip)
+        console.log(marker)
+        if (trip && map) {
+            trip.days?.map( day => {
+                day.locations?.map( location => {
+                    map.setCenter(location.latLng)
+                    const pin = new google.maps.marker.PinElement({
+                        scale: 1.3,
+                        background: "#00b4d8",
+                        glyphColor: "#91d7e6",
+                        borderColor: "#0493b0",
+                    })
+            
+                    marker = new google.maps.marker.AdvancedMarkerElement({
+                        map: map,
+                        position: location.latLng,
+                        content: pin.element,
+                    })
+                    console.log(marker)
+                })
+
+            })
+        }
+    }, [trip, map])
 
     function setMarker(location, name) {
         console.log(map)
@@ -193,12 +220,12 @@ const GoogleMap = ({ session }) => {
     }
 
     return (
-        <div className="flex">
-            <div className={`${open ? "w-7/12" : "w-full"} mt-6 flex flex-col p-4 items-center justify-center`}>
+        <>
+            <div className={`${displayMap ? "hidden" : ""} w-full p-7 flex flex-col items-center justify-center`}>
                 
-                <p className="text-4xl text-[#00b4d8] font-semibold">Explore Travel Destinations</p>
+                <p className="text-2xl text-[#00b4d8] font-semibold mt-2">SEARCH TRAVEL DESTINATIONS</p>
                 
-                <div className="relative flex items-center justify-center space-x-12 mt-8">
+                <div className="relative flex items-center justify-center space-x-10 mt-8">
                                    
                     <div className={`${searchAny ? "" : "hidden"} flex space-x-4`}>
                         <input type="text" onChange={handleInputChange} placeholder="Enter any location" className="p-3 w-[20rem] shadow-md border-2 rounded-3xl placeholder:text-center" ref={textSearchRef} />
@@ -208,14 +235,6 @@ const GoogleMap = ({ session }) => {
                     </div>
                     
                     <div className={`${searchAny ? "hidden" : "relative"} w-[20rem] right-6 shadow-lg`} ref={autoCompleteRef} />
-                       
-                    <button onClick={() => openMap(!open)} className="absolute -right-[7rem] p-3 shadow-lg border border-slate-100 rounded-full">
-                        {open ?
-                            <Image src={mapIconColoured} height={28} width={28} alt="map icon coloured"/> 
-                            : 
-                            <Image src={mapIcon} height={24} width={24} alt="map icon"/> 
-                        }
-                    </button>
 
                 </div>
 
@@ -235,61 +254,61 @@ const GoogleMap = ({ session }) => {
 
                 {selectedPlace &&
                     <div className={`${searchAny ? "hidden" : ""} text-slate-600 flex w-full min-w-[30rem] justify-center`}>
-                        <div className={`${open ? "w-9/12" : "w-7/12" } relative`}>
-                            
-                            <SearchCard 
-                                id={selectedPlace.id}
-                                name={selectedPlace.displayName}
-                                address= {selectedPlace.formattedAddress}
-                                description={selectedPlace.editorialSummary || "Description not Available"}
-                                rating={selectedPlace.rating || "No ratings yet"}
-                                userRatingCount={selectedPlace.userRatingCount}
-                                googleMapLink={selectedPlace.googleMapsURI}
-                                regularOpeningHours={selectedPlace.regularOpeningHours?.weekdayDescriptions || "Opening hours not available"}
-                                placeImg={selectedPlace.photos?.[0]?.getURI()}
-                                latLng={selectedPlace.location.toJSON()} 
-                                session={session}
-                                viewOnMap={viewOnMap}
- 
-                            />
-                        </div>                       
+                        <SavedPlacesCard
+                            email={email} 
+                            location={{
+                                id: selectedPlace.id,
+                                name: selectedPlace.displayName,
+                                address: selectedPlace.formattedAddress,
+                                description: selectedPlace.editorialSummary || "Description not Available",
+                                rating: selectedPlace.rating || "No ratings yet",
+                                userRatingCount: selectedPlace.userRatingCount,
+                                googleMapLink: selectedPlace.googleMapsURI,
+                                regularOpeningHours: selectedPlace.regularOpeningHours?.weekdayDescriptions || "Opening hours not available",
+                                placeImg: selectedPlace.photos?.[0]?.getURI(),
+                                latLng: selectedPlace.location.toJSON()
+                            }}
+                            selectedTrip={trip}
+                            setChangeLocation={setChangeLocation} 
+                        />
                     </div>
                 }
 
                 {searchResult?.map((result, index) => (
-                    <div key={index} className={`${searchAny ? "" : "hidden"} text-slate-600 flex w-full min-w-[30rem] justify-center`}>
-                        <div className={`${open ? "w-11/12" : "w-7/12" } min-w-[37rem]`}>
-                            
-                            <SearchCard
-                                id={result.id}
-                                name={result.displayName}
-                                address= {result.formattedAddress}
-                                description={result.editorialSummary || "Description not Available"}
-                                rating={result.rating || "No ratings yet"}
-                                userRatingCount={result.userRatingCount}
-                                googleMapLink={result.googleMapsURI}
-                                regularOpeningHours={result.regularOpeningHours?.weekdayDescriptions || "Opening hours not available"}
-                                placeImg={result.photos?.[0]?.getURI()} 
-                                latLng={result.location.toJSON()} 
-                                session={session}
-                                viewOnMap={viewOnMap}
-                            />
-
-                        </div>                       
+                    <div 
+                        key={index} 
+                        className={`${searchAny ? "" : "hidden"} text-slate-600 flex w-full min-w-[30rem] justify-center`}
+                    >        
+                        <SavedPlacesCard
+                            email={email} 
+                            location={{
+                                id: result.id,
+                                name: result.displayName,
+                                address: result.formattedAddress,
+                                description: result.editorialSummary || "Description not Available",
+                                rating: result.rating || "No ratings yet",
+                                userRatingCount: result.userRatingCount,
+                                googleMapLink: result.googleMapsURI,
+                                regularOpeningHours: result.regularOpeningHours?.weekdayDescriptions || "Opening hours not available",
+                                placeImg: result.photos?.[0]?.getURI(),
+                                latLng: result.location.toJSON()
+                            }}
+                            selectedTrip={trip}
+                            setChangeLocation={setChangeLocation} 
+                        />
+                                         
                     </div>
                 ))}
             </div>
             
             {(isLoaded) ? 
-                <div className={`${open ? "" : "hidden"} w-5/12`}>
-                    <div className={`${open ? "sticky top-[6rem]" : "hidden"} h-[calc(100vh-6rem)]`}>
-                        <div className="h-full w-full shadow-md border-none" ref={mapRef} /> 
-                    </div>
+                <div className={`${displayMap ? "sticky top-[6rem]" : "hidden"} h-[calc(100vh-6.5rem)] w-full relative`}>
+                    <div className="h-full w-full shadow-md border-none" ref={mapRef} /> 
                 </div>
                 : 
                 <p>Loading...</p>
             }
-        </div>
+        </>
     )
 }
 

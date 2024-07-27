@@ -9,6 +9,8 @@ import Image from "next/image"
 import CreateItinerary from "./CreateItinerary"
 import addIcon from "@/assets/add.svg"
 import Link from "next/link"
+import GoogleMap from "./GoogleMap"
+
 
 const Itinerary = ({ email, session }) => {
 
@@ -17,6 +19,8 @@ const Itinerary = ({ email, session }) => {
     const [savedLocations, setSavedLocations] = useState(null)
     const [changeLocation, setChangeLocation] = useState(null)
     const [openCreateMenu, setOpenCreateMenu] = useState(false)
+    const [showSavedPlaces, setShowSavedPlaces] = useState(true)
+    const [showMap, setShowMap] = useState(false)
 
     useEffect(() => {
         const func = async () => {
@@ -120,39 +124,61 @@ const Itinerary = ({ email, session }) => {
                                 setChangeLocation={setChangeLocation}
                                 setTrips={setTrips}
                                 setShowTripDetails={setShowTripDetails}
+                                showMap={showMap}
+                                setShowMap={setShowMap}
+                                setShowSavedPlaces={setShowSavedPlaces}
                             />
+                            
                     </div>
                 }
-                <div className={`${showTripDetails ? "sticky top-[6rem] w-9/12 h-[calc(100vh-6.5rem)] border-l overflow-auto scrollbar-none": "w-full" }`}>
-                    <div className={`${showTripDetails ? "sticky z-50 flex top-0" : ""} w-full flex justify-center`}>
-                        <h1 className={`${showTripDetails ? "flex py-6 w-full text-2xl bg-[#ecfcff]" : "my-3 p-3 text-3xl border-b border-[#00b4d8]"} 
-                            font-bold text-[#00b4d8] justify-center`}
-                        >
-                            Saved places
-                        </h1>
-                    </div>
-                    {savedLocations?.length > 0 ? 
-                        <div className={`${showTripDetails ? "w-full flex flex-col items-center justify-center" : "flex flex-wrap items-center justify-center gap-8"} px-8 py-5 `}>
-                            {savedLocations?.map((location, index) => (
-                                <div key={index} className={`${showTripDetails ? "w-full" :" w-5/12" } text-slate-600 flex min-w-[30rem] justify-center`}>
-                                    <SavedPlacesCard
-                                        email={email} 
-                                        location={location}
-                                        selectedTrip={showTripDetails}
-                                        setChangeLocation={setChangeLocation}
-                                    />
+                <div className={`${showTripDetails ? "": "w-full" } w-9/12 sticky top-[6rem] h-[calc(100vh-6.5rem)] border-l overflow-auto scrollbar-none`}>
+                        
+                    {(showSavedPlaces || !showTripDetails) ?    
+                        <>
+                            <div className={`${showTripDetails ? "sticky z-40 flex top-0" : ""} w-full flex justify-center`}>
+                                <h1 className={`${showTripDetails ? "flex py-6 w-full text-2xl bg-[#ecfcff]" : "my-3 p-3 text-3xl border-b border-[#00b4d8]"} 
+                                    font-bold text-[#00b4d8] justify-center`}
+                                >
+                                    Saved places
+                                </h1>
+                            </div>
+                            {savedLocations?.length > 0 ? 
+                                <div className={`${showTripDetails ? "w-full flex flex-col items-center justify-center" : "flex flex-wrap items-center justify-center gap-8"} px-8 py-5 `}>
+                                    {savedLocations?.map((location, index) => (
+                                        <div key={index} className={`${showTripDetails ? "w-full" :" w-5/12" } text-slate-600 flex min-w-[30rem] justify-center`}>
+                                            <SavedPlacesCard
+                                                email={email} 
+                                                location={location}
+                                                selectedTrip={showTripDetails}
+                                                setChangeLocation={setChangeLocation}
+                                            />
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
-                        </div>
+                                :
+                                <div className="w-full flex justify-center">
+                                    <Link href="/explore" className="mt-6 p-3 px-8 bg-[#00b4d8] rounded-full text-2xl text-white font-semibold hover:bg-[#00b4d8]/80">
+                                        Explore
+                                    </Link>
+                                </div>
+                            }
+                        </>
                         :
-                        <div className="w-full flex justify-center">
-                            <Link href="/explore" className="mt-6 p-3 px-8 bg-[#00b4d8] rounded-full text-2xl text-white font-semibold hover:bg-[#00b4d8]/80">
-                                Explore
-                            </Link>
-                        </div>
+                        (showTripDetails && 
+                            <GoogleMap 
+                                email={email}
+                                trip={showTripDetails}
+                                setChangeLocation={setChangeLocation}
+                                displayMap={showMap}
+                            />
+                        )
                     }
+                    
                 </div>
+                
+            
             </div>
+            
         </div>
     )
 }
