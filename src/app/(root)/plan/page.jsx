@@ -13,14 +13,6 @@ function Plan() {
             <div>
                 <Preferences />
             </div>
-            <div> <pre className="overflow-x-auto whitespace-pre-wrap">
-                <form action={formAction} className="mt-[8rem]">
-                    <input type="text" placeholder="Input prompt" name="prompt" required />
-                    <button type="submit">Submit</button>
-                    {state}           
-                </form> 
-                </pre>
-            </div>  
         </div>      
     )
    

@@ -7,6 +7,8 @@ import { DateRangePicker } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
 import styles from "./preferences.css"
 import { storePreferences } from "@/utils/action";
+import generateText from "@/utils/gemini2"
+import { useFormState } from "react-dom"
 
 
 const Preferences = ({session}) => {
@@ -18,6 +20,8 @@ const Preferences = ({session}) => {
     const [selected, setSelected] = useState([]);
     const [menuOpen, setMenuOpen] = useState(false);
     const inputRef = useRef(null);
+    const [state, formAction] = useFormState(generateText, "")
+
 
     const tags = [
         "Active",
@@ -48,6 +52,19 @@ const Preferences = ({session}) => {
         console.log('Saving Preferences:', { inputText, startDate, endDate, activities: selected });
         storePreferences({ inputText, startDate, endDate, activities: selected }, session?.user?.email);
     };
+
+    const makeString = (destination, start, end, types) => {
+        if (start instanceof Date) startDate = startDate.toLocaleDateString();
+        if (endDate instanceof Date) endDate = endDate.toLocaleDateString();
+
+        const activitiesString = types.selected.join(', ');
+
+        return 'Plan an itinerary from ${startDate} to ${endDate} to ${destination} based on these preferences: ${activitiesString}`;'
+    }
+
+    const handleGenerate = (destination, start, end, types) => {
+        generateText
+    }
 
 
 
@@ -216,9 +233,34 @@ const Preferences = ({session}) => {
                         Save
                 </button>
         </div>
+            <div className="flex mt-1 justify-center">
+                    <button
+                        type="submit"
+                        style={{
+                            padding: '8px 12px',
+                            backgroundColor: '#00b4d8',
+                            color: '#fff',
+                            border: 'none',
+                            borderRadius: '4px'}}
+                            onClick={handleGenerate} >
+                                Generate Itinerary
+                    </button>
+            </div>  
         </div>
     )
+    const geminiString = makeString(inputText, startDate, endDate, activities)
 
 }
 
+
 export default Preferences
+
+/* <div> <pre className="overflow-x-auto whitespace-pre-wrap">
+                <form action={formAction} className="mt-[8rem]">
+                    <input type="text" placeholder="Input prompt" name="prompt" required />
+                    <button type="submit">Generate Itinerary</button>
+                    {state}           
+                </form> 
+                </pre>
+            </div> 
+            */

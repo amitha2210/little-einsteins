@@ -2,6 +2,9 @@
 import 'dotenv/config'
 import { GoogleGenerativeAI, FunctionDeclarationSchemaType } from "@google/generative-ai";
 // Access your API key as an environment variable (see "Set up your API key" above)
+
+import geminiString from "@/components/preferencesPage/preferences"
+
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 export default async function run(previousState, formData) {
@@ -12,7 +15,7 @@ export default async function run(previousState, formData) {
 
   
 
-  const result = await model.generateContent(prompt);
+  const result = await model.generateContent(geminiString);
   const response = result.response;
   const text = response.text();
 
