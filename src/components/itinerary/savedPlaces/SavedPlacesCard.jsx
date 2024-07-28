@@ -1,4 +1,7 @@
 "use client"
+import addressIcon from "@/assets/address.svg"
+import ratingsIcon from "@/assets/ratings.svg"
+import descriptionIcon from "@/assets/description.svg"
 import descriptionIconColoured from "@/assets/description-coloured.svg"
 import ratingsIconColoured from "@/assets/ratings-coloured.svg"
 import addressIconColoured from "@/assets/address-coloured.svg"
@@ -9,35 +12,20 @@ import dropUpArrow from "@/assets/drop-up-arrow.svg"
 import checkIcon from "@/assets/check.svg"
 import addIcon from "@/assets/add.svg"
 import openingHoursIcon from "@/assets/openinghours.svg"
-import pinonmap from "@/assets/pinonmap.svg"
-
 
 import Image from "next/image"
 import { saveLocationToDB, locationSaved, unsaveLocationDB } from "@/utils/action"
 import { useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
-import ItineraryButton from "../itineraryButton/ItineraryButton"
+import AddToItineraryButton from "./AddToItineraryButton"
 
 function isPopular(rating, userRatingCount) {
     if (rating > 4.0 && userRatingCount > 100) return true
     return false
 }
 
-const SearchCard = ({ id, name, address, description, rating, userRatingCount, googleMapLink, regularOpeningHours, placeImg, latLng, session, viewOnMap }) => {
-
-    const location = {
-        id: id,
-        name: name,
-        address: address,
-        description: description,
-        rating: rating,
-        userRatingCount: userRatingCount,
-        googleMapLink: googleMapLink,
-        regularOpeningHours: regularOpeningHours,
-        placeImg: placeImg,
-        latLng: latLng
-    }
-
+const SavedPlacesCard = ({ email, location, selectedTrip, setChangeLocation }) => {
+                       
     const onHomePage = usePathname().startsWith("/home")
     
     const [saved, saveLocation] = useState(onHomePage)
@@ -45,23 +33,23 @@ const SearchCard = ({ id, name, address, description, rating, userRatingCount, g
 
     useEffect(() => {
         const func = async () => {
-            const check = await locationSaved(id, session?.user?.email)
+            const check = await locationSaved(location.id, email)
             saveLocation(check)
         }
         func() 
-    }, [id, saved])
+    }, [location.id, saved])
 
-    const popular = isPopular(rating, userRatingCount)
+    const popular = isPopular(location.rating, location.userRatingCount)
 
     return (
-        <div className="relative flex my-4 shadow-slate-300 shadow-md text-slate-600 w-full rounded-xl">
-            <div className="p-3 w-7/12">
+        <div className="relative flex my-4 shadow-slate-300 shadow-md border-[#0093b1]/30 border text-slate-600 w-full rounded-xl">
+            <div className="p-2 pb-3 w-7/12">
                 
-                <h1 className="relative -z-40 p-3 text-xl font-semibold">{name}</h1>
+                <h1 className="relative -z-40 p-3 text-xl font-semibold">{location.name}</h1>
                 
                 <div className="relative -z-40 flex flex-wrap ml-4 mb-4 space-x-5">
                     
-                    <div className="flex px-3 py-1.5 bg-slate-100 text-[#00b4d8] text-sm font-semibold rounded-3xl shadow-md items-center justify-center">
+                    <div className="flex p-1.5 bg-slate-100 text-[#00b4d8] text-sm font-semibold rounded-3xl shadow-md items-center justify-center">
                         <Image src={hikingIcon} height={20} width={20} alt="popular" />
                         &nbsp; place type
                     </div>
@@ -78,32 +66,32 @@ const SearchCard = ({ id, name, address, description, rating, userRatingCount, g
                 <table className="relative -z-40">
                     <tbody>
                         <tr>
-                            <td className="flex p-1 h-fit size-16 justify-center">
+                            <td className="flex p-2 h-fit size-10 justify-center">
                                 <Image src={descriptionIconColoured} height={24} width={24} alt="descriptionIcon"/>
                             </td>
-                            <td className="p-1">{description}</td>
+                            <td className="p-1 text-sm">{location.description}</td>
                         </tr>
-                        <tr>
-                            <td className="flex p-2 h-fit size-16 justify-center">
+                        <tr className={`${seeDetails ? "" : "hidden"}`}>
+                            <td className="flex p-2 h-fit size-10 justify-center">
                                 <Image src={addressIconColoured} height={24} width={24} alt="addressIcon"/>
                             </td>
-                            <td className="p-1 text-sm">{address}</td>
+                            <td className="p-1 text-sm">{location.address}</td>
                         </tr>
                         <tr className={`${seeDetails ? "" : "hidden"}`}> 
-                            <td className="flex p-2 h-fit size-16 justify-center">
+                            <td className="flex p-2 h-fit size-10 justify-center">
                                 <Image src={ratingsIconColoured} height={24} width={24} alt="details icon"/>
                             </td>
-                            <td className="p-1 text-sm">{rating} {userRatingCount && `(${userRatingCount})` }</td>
+                            <td className="p-1 text-sm">{location.rating} {location.userRatingCount && `(${location.userRatingCount})` }</td>
                         </tr>
                         <tr className={`${seeDetails ? "" : "hidden"}`}> 
-                            <td className="flex p-2 h-fit size-16 justify-center">
+                            <td className="flex p-2 h-fit size-10 justify-center">
                                 <Image src={openingHoursIcon} height={24} width={24} alt="opening hours icon"/>
                             </td>
                             <td className="p-1 text-sm">
-                                {typeof regularOpeningHours === "string" ?
-                                    regularOpeningHours
+                                {typeof location.regularOpeningHours === "string" ?
+                                    location.regularOpeningHours
                                     :
-                                    regularOpeningHours.map((day, index) => (
+                                    location.regularOpeningHours.map((day, index) => (
                                         <p key={index}>
                                             {day}
                                         </p>
@@ -116,43 +104,44 @@ const SearchCard = ({ id, name, address, description, rating, userRatingCount, g
                 </table>
                 
                 {seeDetails ?
-                    <button onClick={() => setSeeDetails(false) } className="relative z-0 flex mt-2 p-2 text-sm font-semibold items-center hover:font-bold">
+                    <button onClick={() => setSeeDetails(false) } className="relative z-0 flex p-2 text-sm font-semibold items-center hover:font-bold">
                         Less details
                         <Image src={dropUpArrow} height={24} width={24} alt="see less details"/>
                     </button> 
                     :
-                    <button onClick={() => setSeeDetails(true) } className="relative z-0 flex mt-2 p-2 text-sm items-center hover:font-bold">
+                    <button onClick={() => setSeeDetails(true) } className="relative z-0 flex p-2 text-sm items-center hover:font-bold">
                         More details
                         <Image src={dropDownArrow} height={24} width={24} alt="see more details"/>
                     </button>
                 }
 
-                <div className="relative flex items-center mt-4 space-x-4">
+                <div className="flex items-center mt-2 space-x-5">
                     
-                    <a className="w-fit text-xs p-2 px-3 border shadow-sm rounded-xl" href={googleMapLink}>
+                    <a className="w-fit text-xs p-2 px-3 border shadow-sm rounded-xl" href={location.googleMapLink}>
                         Open in Google Maps
                     </a>
                     
-                    <button onClick={() => viewOnMap(latLng)} className="p-2 absolute flex flex-col right-3 bottom-0 items-center rounded-lg bg-slate-100 hover:bg-slate-200">
-                        <Image src={pinonmap} height={24} width={24} alt="view on map"/>
-                    </button>
-                    
-                    {session && 
+                    {email && 
                         (saved ?
-                            <button onClick={() => { unsaveLocationDB(id, session.user?.email); saveLocation(false) }} 
+                            <button onClick={() => { unsaveLocationDB(location.id, email); saveLocation(false) }} 
                             className="flex bg-[#00a4c4] p-2 text-xs rounded-xl text-white font-semibold hover:bg-[#0093b1] items-center">
                                 <Image src={checkIcon} height={20} width={20} alt="unsave location"/>
                             </button> 
                             : 
-                            <button onClick={() => { saveLocationToDB(location, session.user?.email); saveLocation(true) }} 
+                            <button onClick={() => { saveLocationToDB(location, email); saveLocation(true) }} 
                             className="bg-[#00b4d8] p-2 text-xs rounded-xl text-white font-semibold hover:bg-[#00a4c4]">
                                 <Image src={addIcon} height={20} width={20} alt="save location"/>
                             </button>
                         ) 
                     }
 
-                    {session && 
-                        <ItineraryButton location={location} email={session.user?.email}/>
+                    {selectedTrip &&
+                        <AddToItineraryButton 
+                            email={email}
+                            location={location}
+                            trip={selectedTrip}
+                            setChangeLocation={setChangeLocation}
+                        />
                     }
 
                 </div>
@@ -161,14 +150,14 @@ const SearchCard = ({ id, name, address, description, rating, userRatingCount, g
             {location.placeImg ?
                 <div className="relative w-5/12 rounded-xl -z-50">
                     <Image src={location.placeImg} fill={true} alt="place image" style={{objectFit: "cover"}} sizes="" className="rounded-r-xl"/>
-                </div> 
+                </div>
                 :
-                <div className="-z-50 bg-slate-50 w-5/12 flex justify-center items-center font-semibold">
+                <div className="w-5/12 flex items-center justify-center font-semibold bg-slate-50">
                     Image not available
                 </div>
-            }    
+            }     
         </div>
     )
 }
 
-export default SearchCard
+export default SavedPlacesCard

@@ -64,81 +64,81 @@ const Preferences = ({session}) => {
 
     return (
         <div>
-        <div style={{ width: '300px', margin: '50px' }}>
-            <form onSubmit={handleSubmit} className='form-container'>
-                <label htmlFor="inputText" className='text-xl text-[#00b4d8] font-semibold'>Enter your destination</label>
-                <br />
-                <input
-                    type="text"
-                    id="inputText"
-                    className='input-with-grey-outline'
-                    value={inputText}
-                    onChange={handleInputChange}
-                    style={{ width: '100%', padding: '8px', margin: '10px 0' }}
-                />
-                <button 
-                type="submit" 
-                style={{ 
-                    padding: '8px 12px', 
-                    backgroundColor: '#00b4d8', 
-                    color: '#fff', 
-                    border: 'none', 
-                    borderRadius: '4px' }}
-                >
-                    Confirm
-                </button>
-                
-            </form>
-      </div>
-
-        
-      <div style={{margin: '50px'}} className='dates-container'>
-            <p className='text-xl text-[#00b4d8] font-semibold'>
-                Travel dates:
-            </p>
-            <div className="dates">
-                <DateRangePicker 
-                onChange={handleDateChange}
-                value={dateRange}
-                />
-
+            <div style={{ width: '300px', margin: '50px' }}>
+                <form onSubmit={handleSubmit} className='form-container'>
+                    <label htmlFor="inputText" className='text-xl text-[#00b4d8] font-semibold'>Enter your destination</label>
+                    <br />
+                    <input
+                        type="text"
+                        id="inputText"
+                        className='input-with-grey-outline'
+                        value={inputText}
+                        onChange={handleInputChange}
+                        style={{ width: '100%', padding: '8px', margin: '10px 0' }}
+                    />
+                    <button 
+                    type="submit" 
+                    style={{ 
+                        padding: '8px 12px', 
+                        backgroundColor: '#00b4d8', 
+                        color: '#fff', 
+                        border: 'none', 
+                        borderRadius: '4px' }}
+                    >
+                        Confirm
+                    </button>
+                    
+                </form>
             </div>
+
         
-        </div>
+            <div style={{margin: '50px'}} className='dates-container'>
+                <p className='text-xl text-[#00b4d8] font-semibold'>
+                    Travel dates:
+                </p>
+                <div className="dates">
+                    <DateRangePicker 
+                        onChange={handleDateChange}
+                        value={dateRange}
+                    />
 
-        <div style={{margin: '50px'}} className="bg-white h-40 mt-6 grid">
+                </div>
+            
+            </div>
 
-            <p className="text-xl text-[#00b4d8] font-semibold">Types of activities</p>
+            <div style={{margin: '50px'}} className="bg-white h-40 mt-6 grid">
 
-            <div className="relative w-80 h-96 text-sm">
-                {selected?.length ? (
-                    //selects options
-                    <div className="bg-white w-80 relative text-xs flex flex-wrap gap-1 p-2 mb-2">
-                        {selected.map((tag)=> {
-                            return <div key={tag} className="rounded-full w-fit py-1.5 px-3 border border-[#00b4d8] bg-gray-50 text-gray-500
-                            flex items-center gap-2">
-                                {tag}
-                                <div 
-                                    onMouseDown={(e) => e.preventDefault()} 
-                                    onClick={()=> 
-                                        setSelected(selected.filter((i) => i !== tag))
-                                    }
-                                >
-                                    <Icons.Close />
-                                </div>
-                            </div>;
-                        })}
-                        <div className="w-full text-right">
-                            <span 
-                                className="text-gray-400 cursor-pointer" 
-                                onClick={() => {
-                                    setSelected([]);
-                                    inputRef.current?.focus();
-                                }}
-                                >
-                                Clear all
-                            </span>
-                        </div>
+                <p className="text-xl text-[#00b4d8] font-semibold">Types of activities</p>
+
+                <div className="relative w-80 h-96 text-sm">
+                    {selected?.length ? (
+                        //selects options
+                        <div className="bg-white w-80 relative text-xs flex flex-wrap gap-1 p-2 mb-2">
+                            {selected.map((tag)=> {
+                                return <div key={tag} className="rounded-full w-fit py-1.5 px-3 border border-[#00b4d8] bg-gray-50 text-gray-500
+                                flex items-center gap-2">
+                                    {tag}
+                                    <div 
+                                        onMouseDown={(e) => e.preventDefault()} 
+                                        onClick={()=> 
+                                            setSelected(selected.filter((i) => i !== tag))
+                                        }
+                                    >
+                                        <Icons.Close />
+                                    </div>
+                                </div>;
+                            })}
+                            <div className="w-full text-right">
+                                <span 
+                                    className="text-gray-400 cursor-pointer" 
+                                    onClick={() => {
+                                        setSelected([]);
+                                        inputRef.current?.focus();
+                                    }}
+                                    >
+                                    Clear all
+                                </span>
+                            </div>
 
                     </div>) : null}
                 <div className="card flex items-center justify-between p-3 w-80 gap-2.5">
@@ -149,7 +149,7 @@ const Preferences = ({session}) => {
                         value={query} 
                         onChange={(e) => setQuery(e.target.value.trimStart())} 
                         placeholder="Add"
-                        className="bg-transparent text=sm flex-1 caret-[#00b4d8]"
+                        className="bg-transparent text=sm flex-1 caret-rose-600"
                         onFocus={() => setMenuOpen(true)}
                         onBlur={() => setMenuOpen(false)}
                         onKeyDown={(e)=> {
@@ -202,30 +202,7 @@ const Preferences = ({session}) => {
                 ): null}
             </div>
         </div>
-
-        <div style={{ width: '300px', margin: '50px' }}>
-            <form>
-                <label htmlFor="budget" className='text-xl text-[#00b4d8] font-semibold'>What's your budget?</label>
-                    <input
-                        type="range"
-                        id="budget"
-                        name="budget"
-                        min="0"
-                        max="50"
-                        value={budget}
-                        onChange={handleInputChange}
-                        style={{ width: '100%', padding: '8px', margin: '10px 0' }}
-                    />
-            </form>
-        </div>
-        </div>
-    )
-
-}
-
-export default Preferences
-/*
-<div className="flex justify-center">
+        <div className="flex justify-center">
             <button 
                 type="submit" 
                 style={{ 
@@ -237,4 +214,10 @@ export default Preferences
                     onClick={handleSave}>
                         Save
                 </button>
-            </div> */
+        </div>
+        </div>
+    )
+
+}
+
+export default Preferences

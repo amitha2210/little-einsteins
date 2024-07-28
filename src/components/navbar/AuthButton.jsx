@@ -17,13 +17,9 @@ const AuthButton = () => {
             </button>
 
             {open && 
-            <>
-                <LoginForm />
-                <button onClick={() => openForm(false)} className="z-10 fixed right-[40rem] top-[13rem]">
-                    <Image src={close} alt="close login form"/>
-                </button>
-                
-            </>
+            <div className="relative">
+                <LoginForm openForm={openForm}/>
+            </div>
             }
         </>
     )
