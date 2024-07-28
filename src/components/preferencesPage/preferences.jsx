@@ -12,6 +12,7 @@ import { storePreferences } from "@/utils/action";
 const Preferences = ({session}) => {
 
     const [inputText, setInputText] = useState('');
+    const [budget, setBudget] = useState(0);
     const [dateRange, setDateRange] = useState([null, null]);
     const [query, setQuery] = useState("");
     const [selected, setSelected] = useState([]);
@@ -41,11 +42,11 @@ const Preferences = ({session}) => {
         setDateRange(range);
         console.log('Date Range Changed: ', range);
     };
-    const handleSave = () => {
+    /*const handleSave = () => {
         const [startDate, endDate] = dateRange;
         console.log('Saving Preferences:', { inputText, startDate, endDate, activities: selected });
         storePreferences({ inputText, startDate, endDate, activities: selected }, session?.user?.email);
-    };
+    };*/
 
 
 
@@ -148,7 +149,7 @@ const Preferences = ({session}) => {
                         value={query} 
                         onChange={(e) => setQuery(e.target.value.trimStart())} 
                         placeholder="Add"
-                        className="bg-transparent text=sm flex-1 caret-rose-600"
+                        className="bg-transparent text=sm flex-1 caret-[#00b4d8]"
                         onFocus={() => setMenuOpen(true)}
                         onBlur={() => setMenuOpen(false)}
                         onKeyDown={(e)=> {
@@ -201,7 +202,30 @@ const Preferences = ({session}) => {
                 ): null}
             </div>
         </div>
-        <div className="flex justify-center">
+
+        <div style={{ width: '300px', margin: '50px' }}>
+            <form>
+                <label htmlFor="budget" className='text-xl text-[#00b4d8] font-semibold'>What's your budget?</label>
+                    <input
+                        type="range"
+                        id="budget"
+                        name="budget"
+                        min="0"
+                        max="50"
+                        value={budget}
+                        onChange={handleInputChange}
+                        style={{ width: '100%', padding: '8px', margin: '10px 0' }}
+                    />
+            </form>
+        </div>
+        </div>
+    )
+
+}
+
+export default Preferences
+/*
+<div className="flex justify-center">
             <button 
                 type="submit" 
                 style={{ 
@@ -213,10 +237,4 @@ const Preferences = ({session}) => {
                     onClick={handleSave}>
                         Save
                 </button>
-        </div>
-        </div>
-    )
-
-}
-
-export default Preferences
+            </div> */
