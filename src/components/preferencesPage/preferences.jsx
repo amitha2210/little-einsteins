@@ -42,11 +42,12 @@ const Preferences = ({session}) => {
         setDateRange(range);
         console.log('Date Range Changed: ', range);
     };
-    /*const handleSave = () => {
+    
+    const handleSave = () => {
         const [startDate, endDate] = dateRange;
         console.log('Saving Preferences:', { inputText, startDate, endDate, activities: selected });
         storePreferences({ inputText, startDate, endDate, activities: selected }, session?.user?.email);
-    };*/
+    };
 
 
 

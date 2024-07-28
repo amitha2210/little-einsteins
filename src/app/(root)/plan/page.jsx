@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import { auth } from "@/utils/auth/auth"
+//import { auth } from "@/utils/auth/auth"
 import Preferences from '@/components/preferencesPage/preferences'
 import generateText from "@/utils/gemini2"
 import { useFormState } from "react-dom"
