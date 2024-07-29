@@ -9,11 +9,8 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 export default async function generateText(geminiString) {
 
-    const { prompt } = Object.fromEntries(formData)
   // The Gemini 1.5 models are versatile and work with both text-only and multimodal prompts
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
-
-  
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});  
 
   const result = await model.generateContent(geminiString);
   const response = result.response;

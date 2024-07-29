@@ -54,15 +54,18 @@ const Preferences = ({session}) => {
     };
 
     const makeString = (destination, start, end, types) => {
-        if (start instanceof Date) startDate = startDate.toLocaleDateString();
-        if (endDate instanceof Date) endDate = endDate.toLocaleDateString();
+        let startDate;
+        let endDate;
+        if (start instanceof Date) startDate = start.toLocaleDateString();
+        if (end instanceof Date) endDate = end.toLocaleDateString();
 
-        const activitiesString = types.selected.join(', ');
+        const activitiesString = types.join(', ');
 
-        return 'Plan an itinerary from ${startDate} to ${endDate} to ${destination} based on these preferences: ${activitiesString}`;'
+        return `Plan an itinerary from ${startDate} to ${endDate} to ${destination} based on these preferences: ${activitiesString}`
     }
 
     const handleGenerate = async (destination, start, end, types) => {
+
         const geminiString = makeString(destination, start, end, types)
         const generatedText = await generateText(geminiString);
         console.log('Generated Itinerary String:', generatedText);
@@ -209,7 +212,7 @@ const Preferences = ({session}) => {
                                 onMouseDown={(e) => e.preventDefault()}
                                 onClick={()=> {
                                     setMenuOpen(true);
-                                    setSelected((prev) => [... prev,tag]);
+                                    setSelected((prev) => [...prev,tag]);
                                     setQuery("");
                                 }}>
                                     {tag}
@@ -231,7 +234,7 @@ const Preferences = ({session}) => {
                     color: '#fff', 
                     border: 'none', 
                     borderRadius: '4px' }}
-                    onClick={handleSave}>
+                    onClick={() => handleSave}>
                         Save
                 </button>
         </div>
@@ -244,7 +247,7 @@ const Preferences = ({session}) => {
                             color: '#fff',
                             border: 'none',
                             borderRadius: '4px'}}
-                            onClick={handleGenerate(inputText, dateRange[0], dateRange[1], selected)} >
+                            onClick={() => handleGenerate(inputText, dateRange[0], dateRange[1], selected)} >
                                 Generate Itinerary
                     </button>
             </div>  
