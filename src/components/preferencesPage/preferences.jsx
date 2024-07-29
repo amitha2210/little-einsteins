@@ -62,8 +62,10 @@ const Preferences = ({session}) => {
         return 'Plan an itinerary from ${startDate} to ${endDate} to ${destination} based on these preferences: ${activitiesString}`;'
     }
 
-    const handleGenerate = (destination, start, end, types) => {
-        generateText
+    const handleGenerate = async (destination, start, end, types) => {
+        const geminiString = makeString(destination, start, end, types)
+        const generatedText = await generateText(geminiString);
+        console.log('Generated Itinerary String:', generatedText);
     }
 
 
@@ -242,13 +244,12 @@ const Preferences = ({session}) => {
                             color: '#fff',
                             border: 'none',
                             borderRadius: '4px'}}
-                            onClick={handleGenerate} >
+                            onClick={handleGenerate(inputText, dateRange[0], dateRange[1], selected)} >
                                 Generate Itinerary
                     </button>
             </div>  
         </div>
     )
-    const geminiString = makeString(inputText, startDate, endDate, activities)
 
 }
 

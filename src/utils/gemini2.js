@@ -7,7 +7,7 @@ import geminiString from "@/components/preferencesPage/preferences"
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-export default async function run(previousState, formData) {
+export default async function generateText(geminiString) {
 
     const { prompt } = Object.fromEntries(formData)
   // The Gemini 1.5 models are versatile and work with both text-only and multimodal prompts
