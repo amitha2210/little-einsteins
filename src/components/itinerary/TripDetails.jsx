@@ -69,7 +69,7 @@ const TripDetails = ({ email, trip, setChangeLocation, setTrips, setShowTripDeta
             </button>
             
 
-            <div className="z-50 absolute w-fit top-6 -right-2 bg-white p-3 space-x-4 shadow-lg rounded-xl">
+            <div className="z-10 absolute w-fit top-6 right-0 bg-white p-3 space-x-4 shadow-lg rounded-xl">
                 <button
                     className="p-2 bg-slate-50 rounded-md hover:bg-slate-200"
                     onClick={() => { setShowSavedPlaces(true); setShowMap(false) }}

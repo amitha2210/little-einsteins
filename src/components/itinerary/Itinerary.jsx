@@ -14,7 +14,7 @@ import GoogleMap from "./GoogleMap"
 
 const Itinerary = ({ email, session }) => {
 
-    const [trips, setTrips] = useState(null)
+    const [trips, setTrips] = useState([])
     const [showTripDetails, setShowTripDetails] = useState(null)
     const [savedLocations, setSavedLocations] = useState(null)
     const [changeLocation, setChangeLocation] = useState(null)
@@ -106,6 +106,7 @@ const Itinerary = ({ email, session }) => {
                     <div className="absolute top-[5.5rem] bg-white border border-slate-300 rounded-lg shadow-lg">
                         <CreateItinerary 
                             email={email}
+                            trips={trips}
                             setTrips={setTrips}
                             setOpenCreateMenu={setOpenCreateMenu}
                             setShowTripDetails={setShowTripDetails}
@@ -116,7 +117,7 @@ const Itinerary = ({ email, session }) => {
             
             <div className="w-full h-full flex">
                 {showTripDetails &&
-                    <div className="w-full pb-10">
+                    <div className="z-0 w-full pb-10">
                             <TripDetails 
                                 email={email}
                                 trip={showTripDetails}
@@ -131,7 +132,7 @@ const Itinerary = ({ email, session }) => {
                             
                     </div>
                 }
-                <div className={`${showTripDetails ? "": "w-full" } w-9/12 sticky top-[6rem] h-[calc(100vh-6.5rem)] border-l overflow-auto scrollbar-none`}>
+                <div className={`${showTripDetails ? "w-9/12 sticky top-[6rem] h-[calc(100vh-6.5rem)] border-l overflow-auto scrollbar-none": "w-full" } `}>
                         
                     {(showSavedPlaces || !showTripDetails) ?    
                         <>

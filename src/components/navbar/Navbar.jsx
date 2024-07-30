@@ -18,7 +18,7 @@ import NavLink from "./NavLink"
 const navigation = [
     {
         title: "Home",
-        path: "/home",
+        path: "/",
         icon: home,
         iconColour: homeColour,
         shown: true 
@@ -72,8 +72,16 @@ const Navbar = async () => {
             
             <nav className="flex space-x-16">
                 {navigation.map((link, index) =>
-                <NavLink key={index} title={link.title} path={link.path} icon={link.icon} iconColour={link.iconColour} 
-                shown={link.shown} session={session}/> )}
+                    <NavLink 
+                        key={index} 
+                        title={link.title} 
+                        path={link.path} 
+                        icon={link.icon} 
+                        iconColour={link.iconColour} 
+                        shown={link.shown} 
+                        session={session}
+                    /> 
+                )}
             </nav>
 
             <div className="absolute flex right-[5rem] py-3 px-5 bg-[#00b4d8] items-center justify-center rounded-[30px]">

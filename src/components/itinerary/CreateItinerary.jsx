@@ -19,6 +19,8 @@ const CreateItinerary = ({ email, setTrips, setOpenCreateMenu, setShowTripDetail
             setShowTripDetails(trip) 
         }
     }, [created])
+
+    
   
   return (
     <div className="p-5 space-y-4">

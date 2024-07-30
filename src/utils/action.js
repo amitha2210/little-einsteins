@@ -11,7 +11,7 @@ export const handleGoogleLogin = async () => {
 }
 
 export const handleLogout = async () => {
-    await signOut({redirectTo: "/home"}) 
+    await signOut({redirectTo: "/"}) 
 }
 
 export const register = async (previousState, formData) => {
@@ -64,7 +64,7 @@ export const login = async (previousState, formData) => {
     }
 
     try {
-        await signIn("credentials", { username, password, redirectTo: "/home" })
+        await signIn("credentials", { username, password, redirectTo: "/" })
     } catch (error) {
         console.log(error)
         if (error instanceof AuthError) {
@@ -189,7 +189,6 @@ export const createItinerary = async (email, selectedDates, previousState, formD
         console.log(error)
         return { message: "Something went wrong"}
     }
-    return { message: "Itinerary created" }
 }
 
 export const removeTripFromDB = async (tripName, email) => {
@@ -201,6 +200,7 @@ export const removeTripFromDB = async (tripName, email) => {
     )
     return location?.trips
 }
+
 
 export const addLocationToItinerary = async (location, trip, email, date) => {
     const locationWithTime = { time: new Date(date), ...location}
