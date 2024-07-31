@@ -61,7 +61,40 @@ const Preferences = ({session}) => {
 
         const activitiesString = types.join(', ');
 
-        return `Plan an itinerary from ${startDate} to ${endDate} to ${destination} based on these preferences: ${activitiesString}`
+        return `Plan an itinerary from ${startDate} to ${endDate} to ${destination} based on these preferences: ${activitiesString}. 
+                List the itinerarys for different days using this JSON schema:
+                { "type": "object",
+                "properties": {
+                    "days": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "date": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "The date of the itinerary day."
+                          },
+                          "locations": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "location": {
+                                  "type": "string",
+                                  "description": "Name of the location"
+                                },
+                              },
+                              "required": ["time", "location"]
+                            }
+                          }
+                        },
+                        "required": ["date", "locations"]
+                      }
+                    }
+                  },
+                  "required": ["days"]
+                }}`;
     }
 
     const handleGenerate = async (destination, start, end, types) => {
