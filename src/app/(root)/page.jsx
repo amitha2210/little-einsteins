@@ -46,31 +46,33 @@ export default async function Home() {
         :
         <>
           <div className="relative pt-10 pb-20"> 
-            <p className="text-6xl p-3 mt-8 font-semibold font text-[#00b4d8] text-center">
-              TravelGenie
-            </p>
-            <p className="text-center text-xl italic text-slate-600 font-light">
-              The only travel companion you need
-            </p>
+            <div className="text-6xl p-3 mt-6 font-semibold font text-[#00b4d8] flex justify-center">
+              <div className="skew-x-3 skew-y-2 w-fit bg-white p-6 rounded-2xl shadow-2xl">
+                TravelGenie
+                <p className="text-center text-xl italic text-slate-700 font-light pt-3">
+                  The only travel companion you need
+                </p>
+              </div>
+            </div>
           
             <div className="flex justify-center mt-5 space-x-2">
-              <Link href="/explore" className="py-5 px-7 m-5 bg-[#00b4d8] text-white font-semibold text-xl rounded-full shadow-xl hover:bg-[#00b4d8]/80">
+              <Link href="/explore" className="py-4 px-7 m-5 bg-[#00b4d8] text-white font-semibold text-xl rounded-3xl shadow-xl hover:bg-[#00b4d8]/80">
                 Explore
               </Link>
-              <Link href="/login" className="py-5 px-7 m-5 bg-[#ebf8fa] text-[#00b4d8] font-semibold text-xl rounded-full shadow-xl hover:bg-[#ebf8fa]/60">
+              <Link href="/login" className="py-4 px-7 m-5 bg-[#ebf8fa] text-[#00b4d8] font-semibold text-xl rounded-3xl shadow-xl hover:bg-[#d8f9ff]">
                 Start Planning
               </Link>
             </div>
             <Image 
               src={landingPageBg} 
               fill
-              style={{ opacity: "15%", objectFit: "cover" }}
+              style={{ opacity: "90%", objectFit: "cover" }}
               alt="background image" 
               className="-z-50"
             />
           </div>
 
-          <div className="text-center pt-14 text-4xl text-slate-600 font-[450]">
+          <div className="text-center pt-14 text-4xl text-slate-600">
             Use TravelGenie to plan your trips with ease
           </div>
 

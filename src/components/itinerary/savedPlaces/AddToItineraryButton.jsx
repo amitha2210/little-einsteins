@@ -40,7 +40,9 @@ const AddToItineraryButton = ({ email, location, trip, setChangeLocation }) => {
                     z-10 absolute bottom-14 -left-10 w-[21rem] max-h-[15rem] overflow-y-auto scrollbar-thin p-4 flex flex-wrap 
                     gap-x-3 gap-y-2 justify-center border border-slate-300 bg-white rounded-lg"
                 >
-                    <h1 className="w-full text-center pb-2 mb-3 font-semibold border-b">ADD TO ITINERARY</h1>
+                    <h1 className="w-full text-lg text-center pb-2 mb-3 font-semibold border-b">
+                        ADD TO ITINERARY
+                    </h1>
                     {trip.days.map((day, index) => (
                         <DateButton
                             key={index}

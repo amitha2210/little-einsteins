@@ -123,8 +123,10 @@ const LocationCard = ({ email, trip, location, date, setChangeLocation }) => {
                             className={`${openTimeMenu ? "bg-slate-300" : "bg-white"} flex items-center space-x-1 p-1 rounded-md hover:bg-slate-200`}
                         >
                             <Image src={scheduleIcon} height={20} width={20} alt="schedule"/>
-                            <span className="text-sm text-[#19a3bf]">
-                                {location.time.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
+                            <span className="text-xs text-[#19a3bf]">
+                                {location.startTime.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
+                                ~
+                                {location.endTime.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
                             </span>
 
                         </button>
@@ -132,13 +134,16 @@ const LocationCard = ({ email, trip, location, date, setChangeLocation }) => {
                         {openTimeMenu && 
                             <form 
                                 action={setLocationTime}
-                                className="absolute top-10 z-10 w-[13rem] p-4 bg-white flex flex-col items-center mt-3 space-y-5
+                                className="absolute top-10 z-10 w-[12rem] p-4 bg-white flex flex-col items-center mt-3 space-y-5
                                     border-slate-300 border rounded-lg"
                             >
                                 <p className="w-full text-center font-semibold border-b pb-2">
                                     Time of Visit:
                                 </p>
-                                <input type="time" name="time" placeholder="Select time" required/>
+                                
+                                <input type="time" name="startTime" placeholder="Select time" required/>
+                                
+                                <input type="time" name="endTime" placeholder="Select time" required/>
                                 
                                 <button className="relative p-1 px-2 bg-[#19a3bf] text-white font-semibold shadow-lg rounded-lg hover:bg-[#19a3bf]/80">
                                     Set Time

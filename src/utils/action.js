@@ -203,7 +203,12 @@ export const removeTripFromDB = async (tripName, email) => {
 
 
 export const addLocationToItinerary = async (location, trip, email, date) => {
-    const locationWithTime = { time: new Date(date), ...location}
+    const locationWithTime = { 
+        startTime: new Date(date),
+        endTime: new Date(date),
+        ...location
+    }
+
     console.log(locationWithTime)
     const client = await ConnectionDB
     const itinerary = await client.db("places").collection("itinerary").findOneAndUpdate(
@@ -255,10 +260,12 @@ export const locationInItineraryByTrip = async (id, trip, email) => {
 
 export const setLocationItineraryTime = async (id, trip, email, date, previousState, formData) => {
     
-    const { time } = Object.fromEntries(formData)
-    const newDate = new Date(date)
-    newDate.setHours(time.slice(0, 2), time.slice(3, 5))
-    console.log(newDate)
+    const { startTime, endTime } = Object.fromEntries(formData)
+    const newStartDate = new Date(date)
+    newStartDate.setHours(startTime.slice(0, 2), startTime.slice(3, 5))
+
+    const newEndDate = new Date(date)
+    newEndDate.setHours(endTime.slice(0, 2), endTime.slice(3, 5))
 
     const client = await ConnectionDB
     const location = await client.db("places").collection("itinerary").findOneAndUpdate(
@@ -282,7 +289,8 @@ export const setLocationItineraryTime = async (id, trip, email, date, previousSt
     },
     {
         $set: {
-            "trips.$.days.$[day].locations.$[location].time": newDate
+            "trips.$.days.$[day].locations.$[location].startTime": newStartDate,
+            "trips.$.days.$[day].locations.$[location].endTime": newEndDate,
         }
     },
     {
@@ -295,7 +303,9 @@ export const setLocationItineraryTime = async (id, trip, email, date, previousSt
 
 export const changeLocationDateItinerary = async (location, trip, email, currDate, newDate) => {
     
-    location.time = new Date(newDate)
+    location.startTime = new Date(newDate)
+    location.endTime = new Date(newDate)
+
     await removeLocationFromItinerary(location.id, trip, email, currDate)
     await addLocationToItinerary(location, trip, email, newDate)
         
@@ -336,7 +346,7 @@ export const getTrips =  async (email) => {
                                         locations: {
                                             $sortArray: {
                                                 input: "$$day.locations",
-                                                sortBy: { time: 1 }
+                                                sortBy: { startTime: 1 }
                                             }
                                         }
                                     }

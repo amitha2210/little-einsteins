@@ -17,20 +17,18 @@ function LoginForm({ loginPage, openForm }) {
 
     return (
         <>
-            {open &&
             <div className={`size-full flex flex-col justify-center items-center 
-            ${loginPage ? "" : "fixed bottom-0 right-0 h-screen w-screen bg-black/40"}`} >          
+                ${loginPage ? "" : "fixed bottom-0 right-0 h-screen w-screen bg-black/40"}`} 
+            >          
                 <div className={loginPage ? styles.containerPage : styles.container}>
                     {openForm &&
                         <button onClick={() => openForm(false)} className="absolute top-4 right-4">
                             <Image src={close} alt="close login form"/>
                         </button>
                     }
-                    <Link href="/home" className="flex">
-                        <Image src={app} alt="App icon" className="relative right-3"/>
-                        
-                        <span className="text-xl font-semibold">
-                            Sign in to <i>AppName</i>
+                    <Link href="/" className="flex">                        
+                        <span className="text-2xl font-semibold text-slate-700">
+                            Sign in to TravelGenie
                         </span>
                     </Link>
                     
@@ -55,13 +53,23 @@ function LoginForm({ loginPage, openForm }) {
                     
                     <span className={styles.span}>OR</span>
                     
-                    <form className="flex flex-row p-3 w-4/5 justify-center border border-slate-500 rounded-3xl" 
-                    action={handleGoogleLogin}>
-                        <Image src={google} width={25} height={25} alt="login with google" className="relative right-10"/>
-                        <button type="submit">Sign in with Google</button>
+                    <form 
+                        className="flex flex-row p-3 w-4/5 justify-center border border-slate-500 rounded-3xl" 
+                        action={handleGoogleLogin}
+                    >
+                        <Image 
+                            src={google} 
+                            width={25} 
+                            height={25} 
+                            alt="login with google" 
+                            className="relative right-10"
+                        />
+                        <button type="submit">
+                            Sign in with Google
+                        </button>
                     </form>
                 </div>    
-            </div>}
+            </div>
         </>
     )
 }

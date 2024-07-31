@@ -230,6 +230,7 @@ const GoogleMap = ({ session }) => {
                         <span>By location address</span>
                         <Image src={searchAny ? radioButtonUnchecked : radioButtonChecked} height={18} width={18} alt="radio button"/>
                     </button>
+                    
 
                 </div>
 

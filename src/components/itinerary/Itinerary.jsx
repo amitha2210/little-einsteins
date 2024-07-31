@@ -5,6 +5,7 @@ import { useState, useEffect } from "react"
 import TripDetails from "./TripDetails"
 import SavedPlacesCard from "./savedPlaces/SavedPlacesCard"
 import bg from "@/assets/travelbg.jpg"
+import savedPlacesIcon from "@/assets/saved-places-coloured.svg"
 import Image from "next/image"
 import CreateItinerary from "./CreateItinerary"
 import addIcon from "@/assets/add.svg"
@@ -57,13 +58,15 @@ const Itinerary = ({ email, session }) => {
             <div className="relative flex flex-wrap w-full min-h-[20rem] items-center justify-center p-10 pt-28 pb-14 gap-x-10 gap-y-7">
                 <div className="absolute top-5 flex items-center justify-center">
                     <p className="p-3 px-6 bg-white text-3xl font-semibold text-slate-600
-                        shadow-2xl rounded-md">
+                        shadow-2xl rounded-xl">
                         My Trips
                     </p>
                     <button 
                         onClick={() => { setOpenCreateMenu(!openCreateMenu) }}
-                        className="bg-[#00b4d8] p-3 rounded-md ml-7 shadow-sm hover:bg-[#00b4d8]/80">
-                        <Image src={addIcon} height={28} width={28} alt="create new trip" />
+                        className="flex items-center bg-[#00b4d8] p-3 rounded-md ml-7 shadow-sm hover:bg-[#00b4d8]/80 text-white font-bold text-lg"
+                    >
+                        <Image src={addIcon} height={28} width={28} alt="create new trip"/>
+                        plan
                     </button>
                     
                 </div>
@@ -77,8 +80,7 @@ const Itinerary = ({ email, session }) => {
                 <Image 
                     src={bg} 
                     fill
-                    objectFit="cover"
-                    style={{ opacity: "35%", backgroundPosition: "bottom" }}
+                    style={{ opacity: "70%", objectFit: "cover" }}
                     className="-z-50"
                     alt="background"
                 />
@@ -90,8 +92,8 @@ const Itinerary = ({ email, session }) => {
                             ${showTripDetails == null 
                                 ? "" 
                                 : dest.trip == showTripDetails.trip 
-                                ? "shadow-xl" 
-                                : "opacity-65"
+                                ? "shadow-2xl" 
+                                : "opacity-80"
                             }`
                         }
                     >
@@ -127,6 +129,7 @@ const Itinerary = ({ email, session }) => {
                                 setShowTripDetails={setShowTripDetails}
                                 showMap={showMap}
                                 setShowMap={setShowMap}
+                                showSavedPlaces={showSavedPlaces}
                                 setShowSavedPlaces={setShowSavedPlaces}
                             />
                             
@@ -136,11 +139,12 @@ const Itinerary = ({ email, session }) => {
                         
                     {(showSavedPlaces || !showTripDetails) ?    
                         <>
-                            <div className={`${showTripDetails ? "sticky z-40 flex top-0" : ""} w-full flex justify-center`}>
-                                <h1 className={`${showTripDetails ? "flex py-6 w-full text-2xl bg-[#ecfcff]" : "my-3 p-3 text-3xl border-b border-[#00b4d8]"} 
-                                    font-bold text-[#00b4d8] justify-center`}
+                            <div className={`${showTripDetails ? "sticky z-40 flex top-0 mb-8" : ""} w-full flex justify-center`}>
+                                <h1 className={`${showTripDetails ? "py-6 w-full text-2xl bg-[#ecfcff]" : "my-3 p-3 text-3xl border-b border-[#00b4d8]"} 
+                                    font-bold text-[#19a3bf] justify-center flex`}
                                 >
                                     Saved places
+                                    <Image src={savedPlacesIcon} height={28} width={28} alt="saved locations" className="ml-1"/>
                                 </h1>
                             </div>
                             {savedLocations?.length > 0 ? 
