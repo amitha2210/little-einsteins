@@ -12,7 +12,6 @@ import addIcon from "@/assets/add.svg"
 import Link from "next/link"
 import GoogleMap from "./GoogleMap"
 
-
 const Itinerary = ({ email, session }) => {
 
     const [trips, setTrips] = useState([])
@@ -58,21 +57,22 @@ const Itinerary = ({ email, session }) => {
             <div className="relative flex flex-wrap w-full min-h-[20rem] items-center justify-center p-10 pt-28 pb-14 gap-x-10 gap-y-7">
                 <div className="absolute top-5 flex items-center justify-center">
                     <p className="p-3 px-6 bg-white text-3xl font-semibold text-slate-600
-                        shadow-2xl rounded-xl">
+                        shadow-2xl rounded-xl skew-x-3">
                         My Trips
                     </p>
                     <button 
                         onClick={() => { setOpenCreateMenu(!openCreateMenu) }}
-                        className="flex items-center bg-[#00b4d8] p-3 rounded-md ml-7 shadow-sm hover:bg-[#00b4d8]/80 text-white font-bold text-lg"
+                        className="flex items-center bg-[#11a9c7] p-3 rounded-md ml-7 shadow-xl skew-x-3 hover:bg-[#00b4d8]/80
+                        text-white text-xl"
                     >
                         <Image src={addIcon} height={28} width={28} alt="create new trip"/>
-                        plan
+                        Plan
                     </button>
                     
                 </div>
                 
                 {!trips?.[0] &&
-                    <p className="text-2xl font-semibold text-white bg-[#00b4d8]/90 p-4 rounded-xl">
+                    <p className="text-2xl font-semibold text-white bg-[#00b4d8] p-4 rounded-xl">
                         No Trips Planned
                     </p>
                 }
@@ -135,8 +135,7 @@ const Itinerary = ({ email, session }) => {
                             
                     </div>
                 }
-                <div className={`${showTripDetails ? "w-9/12 sticky top-[6rem] h-[calc(100vh-6.5rem)] border-l overflow-auto scrollbar-none": "w-full" } `}>
-                        
+                <div className={`${showTripDetails ? "w-9/12 sticky top-[6rem] h-[calc(100vh-6.5rem)] border-l overflow-auto scrollbar-none": "w-full" } `}>   
                     {(showSavedPlaces || !showTripDetails) ?    
                         <>
                             <div className={`${showTripDetails ? "sticky z-40 flex top-0 mb-8" : ""} w-full flex justify-center`}>

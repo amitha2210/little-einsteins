@@ -1,7 +1,6 @@
 import GoogleMap from "@/components/googleMap/GoogleMap"
 import { auth } from "@/utils/auth/auth"
 
-
 export default async function Explore() {
   
   const session = await auth()

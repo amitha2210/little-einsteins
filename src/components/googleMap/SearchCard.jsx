@@ -57,9 +57,9 @@ const SearchCard = ({ id, name, address, description, rating, userRatingCount, g
         <div className="relative flex my-4 shadow-slate-300 shadow-md text-slate-600 w-full rounded-xl">
             <div className="p-3 w-7/12">
                 
-                <h1 className="relative -z-40 p-3 text-xl font-semibold">{name}</h1>
+                <h1 className="relative p-3 text-xl font-semibold">{name}</h1>
                 
-                <div className="relative -z-40 flex flex-wrap ml-4 mb-4 space-x-5">
+                <div className="relative flex flex-wrap ml-4 mb-4 space-x-5">
                     
                     <div className="flex px-3 py-1.5 bg-slate-100 text-[#00b4d8] text-sm font-semibold rounded-3xl shadow-md items-center justify-center">
                         <Image src={hikingIcon} height={20} width={20} alt="popular" />
@@ -75,7 +75,7 @@ const SearchCard = ({ id, name, address, description, rating, userRatingCount, g
 
                 </div>                 
                 
-                <table className="relative -z-40">
+                <table className="relative">
                     <tbody>
                         <tr>
                             <td className="flex p-1 h-fit size-16 justify-center">
@@ -159,11 +159,11 @@ const SearchCard = ({ id, name, address, description, rating, userRatingCount, g
             </div>
             
             {location.placeImg ?
-                <div className="relative w-5/12 rounded-xl -z-50">
+                <div className="-z-10 relative w-5/12 rounded-xl">
                     <Image src={location.placeImg} fill={true} alt="place image" style={{objectFit: "cover"}} sizes="" className="rounded-r-xl"/>
                 </div> 
                 :
-                <div className="-z-50 bg-slate-50 w-5/12 flex justify-center items-center font-semibold">
+                <div className="bg-slate-50 w-5/12 flex justify-center items-center font-semibold rounded-r-xl">
                     Image not available
                 </div>
             }    
