@@ -1,4 +1,4 @@
-import BigCalendar from "@/components/BigCalender"
+import BigCalendar from "@/components/bigCalendar/BigCalendar"
 
 const Account = () => {
   return (

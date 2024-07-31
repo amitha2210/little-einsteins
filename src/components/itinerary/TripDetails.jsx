@@ -6,7 +6,9 @@ import { removeTripFromDB } from "@/utils/action"
 import deleteIcon from "@/assets/delete.svg"
 import Image from "next/image"
 import savedPlacesIcon from "@/assets/saved-places.svg"
+import savedPlacesIconColoured from "@/assets/saved-places-coloured.svg"
 import searchIcon from "@/assets/search.svg"
+import searchIconColoured from "@/assets/search-coloured.svg"
 import mapIcon from "@/assets/map.svg"
 import mapIconColoured from "@/assets/map-coloured.svg"
 import pinonmap from "@/assets/pinonmap.svg"
@@ -33,7 +35,17 @@ function formatDate(date) {
     return day + ", " + num + " " + month 
 }
 
-const TripDetails = ({ email, trip, setChangeLocation, setTrips, setShowTripDetails, showMap, setShowMap, setShowSavedPlaces }) => {
+const TripDetails = ({ 
+    email, 
+    trip, 
+    setChangeLocation, 
+    setTrips, 
+    setShowTripDetails, 
+    showMap, 
+    setShowMap, 
+    showSavedPlaces, 
+    setShowSavedPlaces 
+}) => {
 
     const [scrollToDate, setScrollToDate] = useState(null)
     
@@ -67,26 +79,40 @@ const TripDetails = ({ email, trip, setChangeLocation, setTrips, setShowTripDeta
             >
                 <Image src={deleteIcon} height={26} width={26} alt="delete trip" />
             </button>
-            
 
-            <div className="z-50 absolute w-fit top-6 -right-2 bg-white p-3 space-x-4 shadow-lg rounded-xl">
+            <div className="z-10 absolute w-fit top-6 right-0 bg-white p-3 space-x-4 shadow-lg rounded-xl">
                 <button
                     className="p-2 bg-slate-50 rounded-md hover:bg-slate-200"
                     onClick={() => { setShowSavedPlaces(true); setShowMap(false) }}
                 >
-                    <Image src={savedPlacesIcon} height={24} width={24} alt="saved places" />
+                    <Image 
+                        src={showSavedPlaces ? savedPlacesIconColoured : savedPlacesIcon} 
+                        height={24} 
+                        width={24} 
+                        alt="saved places" 
+                    />
                 </button>
                 <button
                     className="p-2 bg-slate-50 rounded-md hover:bg-slate-200"
                     onClick={() => { setShowMap(false); setShowSavedPlaces(false) }}
                 >
-                    <Image src={searchIcon} height={24} width={24} alt="search" />
+                    <Image 
+                        src={(!showMap && !showSavedPlaces) ? searchIconColoured : searchIcon} 
+                        height={24} 
+                        width={24} 
+                        alt="search" 
+                    />
                 </button>
                 <button
                     className="p-2 bg-slate-50 rounded-md hover:bg-slate-200"
                     onClick={() => { setShowMap(true); setShowSavedPlaces(false) }}
                 >
-                    <Image src={showMap ? mapIconColoured : mapIcon} height={24} width={24} alt="map" />
+                    <Image 
+                        src={showMap ? mapIconColoured : mapIcon} 
+                        height={24} 
+                        width={24} 
+                        alt="map" 
+                    />
                 </button>
             </div>
         </div>
@@ -94,7 +120,7 @@ const TripDetails = ({ email, trip, setChangeLocation, setTrips, setShowTripDeta
         
 
         <div className="w-full flex px-5 ">
-            <div className="sticky top-[11rem] h-[calc(100vh-15rem)] overflow-y-auto scrollbar-none flex flex-col w-[8rem] p-2 space-y-4 border-r">
+            <div className="sticky top-[11rem] h-[calc(100vh-15rem)] overflow-y-auto scrollbar-none flex flex-col w-[8rem] p-1 space-y-4 border-r">
                 <p className="flex justify-center text-lg font-semibold text-slate-600">
                     Itinerary
                 </p>

@@ -2,7 +2,7 @@ import Link from "next/link";
 import AuthButton from "./AuthButton";
 import { handleLogout } from "@/utils/action";
 import { auth } from "@/utils/auth/auth";
-import appColour from "@/assets/app-coloured.svg"
+import appColour from "@/app/icon.png"
 import Image from "next/image"
 import plan from "@/assets/plan.svg"
 import explore from "@/assets/explore.svg"
@@ -18,7 +18,7 @@ import NavLink from "./NavLink"
 const navigation = [
     {
         title: "Home",
-        path: "/home",
+        path: "/",
         icon: home,
         iconColour: homeColour,
         shown: true 
@@ -63,17 +63,25 @@ const Navbar = async () => {
             border-b-[0.25px] border-slate-300 z-50 bg-white h-24"
         >
 
-            <Link href="/" alt="landing page" className="absolute left-[5rem]">
+            <Link href="/" alt="landing page" className="absolute left-[3rem]">
                 <div className="flex items-center">
-                        <Image src={appColour} height={50} width={50} alt="myAppName" />
-                    <span className="text-2xl text-[#00b4d8] font-bold ml-3">AppName</span>
+                        <Image src={appColour} height={30} width={30} alt="TravelGenie" />
+                    <span className="text-2xl text-[#11a9c7] font-semibold ml-3">TravelGenie</span>
                 </div>
             </Link>
             
             <nav className="flex space-x-16">
                 {navigation.map((link, index) =>
-                <NavLink key={index} title={link.title} path={link.path} icon={link.icon} iconColour={link.iconColour} 
-                shown={link.shown} session={session}/> )}
+                    <NavLink 
+                        key={index} 
+                        title={link.title} 
+                        path={link.path} 
+                        icon={link.icon} 
+                        iconColour={link.iconColour} 
+                        shown={link.shown} 
+                        session={session}
+                    /> 
+                )}
             </nav>
 
             <div className="absolute flex right-[5rem] py-3 px-5 bg-[#00b4d8] items-center justify-center rounded-[30px]">

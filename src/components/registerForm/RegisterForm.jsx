@@ -24,11 +24,9 @@ function RegisterForm() {
 
     return (
         <div className="flex flex-col h-screen items-center justify-center gap-[40px]">
-            <Link href="/home" className="flex">
-                <Image src={app} alt="App icon" className="relative right-3"/>
-
-                <span className="text-xl font-semibold">
-                    Sign up for <i>AppName</i>
+            <Link href="/" className="flex">
+                <span className="text-2xl font-semibold text-slate-700">
+                    Sign up for TravelGenie
                 </span>
             </Link>
             

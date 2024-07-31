@@ -6,6 +6,7 @@ import mapIconColoured from "@/assets/map-coloured.svg"
 import radioButtonUnchecked from "@/assets/radiobutton-unchecked.svg"
 import radioButtonChecked from "@/assets/radiobutton-checked.svg"
 import searchIcon from "@/assets/search.svg"
+import explorePageBg from "@/assets/explore-page-background.jpg"
 
 import Image from "next/image"
 import SearchCard from "./SearchCard"
@@ -194,43 +195,71 @@ const GoogleMap = ({ session }) => {
 
     return (
         <div className="flex">
-            <div className={`${open ? "w-7/12" : "w-full"} mt-6 flex flex-col p-4 items-center justify-center`}>
-                
-                <p className="text-4xl text-[#00b4d8] font-semibold">Explore Travel Destinations</p>
-                
-                <div className="relative flex items-center justify-center space-x-12 mt-8">
-                                   
-                    <div className={`${searchAny ? "" : "hidden"} flex space-x-4`}>
-                        <input type="text" onChange={handleInputChange} placeholder="Enter any location" className="p-3 w-[20rem] shadow-md border-2 rounded-3xl placeholder:text-center" ref={textSearchRef} />
-                        <button onClick={() => search()} className="p-3 shadow-lg border border-slate-100 rounded-full">
-                            <Image src={searchIcon} alt="search icon"/>
+            <div className={`${open ? "w-7/12" : "w-full"} flex flex-col items-center justify-center`}>
+                <div className={`${(!selectedPlace && !searchResult) ? "h-[calc(100vh-6rem)]" : "h-full"} relative w-full items-center justify-center flex flex-col p-10 py-20`}>
+                    <Image 
+                        src={explorePageBg} 
+                        fill
+                        style={{ opacity: "90%", objectFit: "cover" }}
+                        alt="background image" 
+                        className="-z-50"
+                    />
+                        
+                    <p className="text-4xl text-[#00b4d8] font-semibold p-5 -skew-y-1 bg-white rounded-2xl">
+                        Explore Travel Destinations
+                    </p>
+                    
+                    <div className="relative flex items-center justify-center space-x-12 mt-8">
+                                    
+                        <div className={`${searchAny ? "" : "hidden"} flex space-x-4`}>
+                            <input type="text" onChange={handleInputChange} placeholder="Enter any location" className="p-3 w-[20rem] shadow-md border-2 rounded-3xl placeholder:text-center" ref={textSearchRef} />
+                            <button 
+                                onClick={() => search()} 
+                                className="p-3 shadow-lg bg-white border border-slate-100 rounded-full"
+                            >
+                                <Image src={searchIcon} alt="search icon"/>
+                            </button>
+                        </div>
+                        
+                        <div className={`${searchAny ? "hidden" : "relative"} bg-white w-[20rem] right-6 shadow-lg`} ref={autoCompleteRef} />
+                        
+                        <button 
+                            onClick={() => openMap(!open)} 
+                            className="p-3 shadow-lg bg-white border border-slate-100 rounded-full"
+                        >
+                            {open ?
+                                <Image src={mapIconColoured} height={28} width={28} alt="map icon coloured"/> 
+                                : 
+                                <Image src={mapIcon} height={24} width={24} alt="map icon"/> 
+                            }
                         </button>
+
                     </div>
-                    
-                    <div className={`${searchAny ? "hidden" : "relative"} w-[20rem] right-6 shadow-lg`} ref={autoCompleteRef} />
-                       
-                    <button onClick={() => openMap(!open)} className="absolute -right-[7rem] p-3 shadow-lg border border-slate-100 rounded-full">
-                        {open ?
-                            <Image src={mapIconColoured} height={28} width={28} alt="map icon coloured"/> 
-                            : 
-                            <Image src={mapIcon} height={24} width={24} alt="map icon"/> 
-                        }
-                    </button>
+            
+                    <div className="flex text-sm space-x-3 mt-6 justify-center"> 
+                        
+                        <button 
+                            onClick={() => setSearchAny(true)} 
+                            className="flex p-4 shadow-lg bg-white border border-slate-100 rounded-full items-center space-x-2"
+                        >
+                            <span>Search Anything</span>
+                            <Image 
+                                src={searchAny ? radioButtonChecked : radioButtonUnchecked} 
+                                height={18} 
+                                width={18} 
+                                alt="radio button"
+                            />
+                        </button>
+                        
+                        <button 
+                            onClick={() => setSearchAny(false)} 
+                            className="flex p-4 shadow-lg bg-white border border-slate-100 rounded-full items-center space-x-2"
+                        >
+                            <span>By location address</span>
+                            <Image src={searchAny ? radioButtonUnchecked : radioButtonChecked} height={18} width={18} alt="radio button"/>
+                        </button>
 
-                </div>
-
-                <div className="flex text-sm space-x-3 mt-6 mb-10 justify-center"> 
-                    
-                    <button onClick={() => setSearchAny(true)} className="flex p-4 shadow-lg border border-slate-100 rounded-full items-center space-x-2">
-                        <span>Search Anything</span>
-                        <Image src={searchAny ? radioButtonChecked : radioButtonUnchecked} height={18} width={18} alt="radio button"/>
-                    </button>
-                    
-                    <button onClick={() => setSearchAny(false)} className="flex p-4 shadow-lg border border-slate-100 rounded-full items-center space-x-2">
-                        <span>By location address</span>
-                        <Image src={searchAny ? radioButtonUnchecked : radioButtonChecked} height={18} width={18} alt="radio button"/>
-                    </button>
-
+                    </div>
                 </div>
 
                 {selectedPlace &&
