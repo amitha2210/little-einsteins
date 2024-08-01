@@ -56,8 +56,8 @@ const Preferences = ({session}) => {
     const makeString = (destination, start, end, types) => {
         let startDate;
         let endDate;
-        if (start instanceof Date) startDate = start.toLocaleDateString();
-        if (end instanceof Date) endDate = end.toLocaleDateString();
+        if (start instanceof Date) startDate = start.toDateString();
+        if (end instanceof Date) endDate = end.toDateString();
 
         const activitiesString = types.join(', ');
 
@@ -71,7 +71,7 @@ const Preferences = ({session}) => {
                         "type": "object",
                         "properties": {
                           "date": {
-                            "type": "string",
+                            "type": "date",
                             "format": "date",
                             "description": "The date of the itinerary day."
                           },
@@ -84,8 +84,16 @@ const Preferences = ({session}) => {
                                   "type": "string",
                                   "description": "Name of the location"
                                 },
+                                "startTime": {
+                                    "type": "date",
+                                    "description": "Time of visit"
+                                },
+                                "endTime": {
+                                    "type": "date",
+                                    "description": "Time of departure"
+                                },
                               },
-                              "required": ["time", "location"]
+                              "required": ["startTime", "endTime", "location"]
                             }
                           }
                         },
