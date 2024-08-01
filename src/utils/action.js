@@ -26,12 +26,12 @@ export const register = async (previousState, formData) => {
 
     try {
         const client = await ConnectionDB
-        const user = await client.db("credentials").collection("credentials").findOne({ "username": username })
+        const user = await client.db("credentials").collection("credentials").findOne({ "username": username.trim() })
         if (user) {
             return { error: "Username already exists" }
         }
         await client.db("credentials").collection("credentials").insertOne({
-            username: username,
+            username: username.trim(),
             email: email,
             emailVerified: false,
             password: hashedpassword,
@@ -311,16 +311,6 @@ export const changeLocationDateItinerary = async (location, trip, email, currDat
         
     return { trip: trip }
 }
-
-// export const getTrips =  async (email) => {
-//     const client = await ConnectionDB
-//     const trips = await client.db("places").collection("itinerary").findOne({
-//             email: email, 
-//     })
-//     await sortTrips(email)
-//     //return array of trips
-//     return trips?.trips
-// }
 
 export const getTrips =  async (email) => {
     const client = await ConnectionDB

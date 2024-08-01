@@ -8,7 +8,7 @@ import { authConfig } from "./auth.config"
 const login = async (credentials) => {
     try {
         const client = await ConnectionToDB
-        const user = await client.db("credentials").collection("credentials").findOne({ "username": credentials.username })
+        const user = await client.db("credentials").collection("credentials").findOne({ "username": credentials.username.trim() })
         if(!user) {
             throw new Error("Invalid Username or Password!")
         }
@@ -47,7 +47,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async signIn({ user, account, profile }) {
         console.log(user)
         console.log(account)
-        console.log("HERE")
         console.log(profile)
         
         if (account.provider === "google") {

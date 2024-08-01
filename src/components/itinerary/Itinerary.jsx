@@ -72,7 +72,7 @@ const Itinerary = ({ email, session }) => {
                 </div>
                 
                 {!trips?.[0] &&
-                    <p className="text-2xl font-semibold text-white bg-[#00b4d8] p-4 rounded-xl">
+                    <p className="text-2xl font-medium text-white bg-[#00b4d8] p-4 rounded-xl">
                         No Trips Planned
                     </p>
                 }

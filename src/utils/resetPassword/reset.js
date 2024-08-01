@@ -35,7 +35,7 @@ export const sendPassWordResetEmail = async (email, token) => {
         from: 'Acme <onboarding@resend.dev>',
         to: email,
         subject: 'Reset your password',
-        html: `<p>Click <a href="${confirmationLink}">here< /a> to reset password.<p>`
+        html: `<p>Click <a href="${confirmationLink}"/>here to reset password.<p>`
       })
 
 }
