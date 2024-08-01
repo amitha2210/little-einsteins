@@ -3,13 +3,11 @@ import { usePathname } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
 
-const NavLink = ({ title, path, icon, iconColour, shown, session }) => {
+const NavLink = ({ title, path, icon, iconColour }) => {
 
     const pathname = usePathname()
 
   return (
-    (shown || session) &&
-    
     <Link href={path} className={`flex flex-col relative top-3 items-center text-sm p-1 min-w-20
       ${pathname == path ?  "text-[#00B4D8] font-bold": "text-gray-600"}`}
     >

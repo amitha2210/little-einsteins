@@ -21,35 +21,24 @@ const navigation = [
         path: "/",
         icon: home,
         iconColour: homeColour,
-        shown: true 
     },
     {
         title: "Plan",
         path: "/plan",
         icon: plan,
         iconColour: planColour,
-        shown: true
     },
     {
         title: "Preferences",
         path: "/preferences",
         icon: plan,
         iconColour: planColour,
-        shown: true
     },
     {
         title: "Explore",
         path: "/explore",
         icon: explore,
         iconColour: exploreColour,
-        shown: true
-    },
-    {
-        title: "Account",
-        path: "/account",
-        icon: account,
-        iconColour: accountColour,
-        shown: false
     }
 ]
 
@@ -78,21 +67,26 @@ const Navbar = async () => {
                         path={link.path} 
                         icon={link.icon} 
                         iconColour={link.iconColour} 
-                        shown={link.shown} 
-                        session={session}
                     /> 
                 )}
             </nav>
 
-            <div className="absolute flex right-[5rem] py-3 px-5 bg-[#00b4d8] items-center justify-center rounded-[30px]">
+            <div className="absolute flex right-[2rem] p-3 bg-[#00b4d8] items-center justify-center rounded-2xl">
                 {session ?
-                <form action={handleLogout}>
-                    <button type="submit" className="flex text-white font-bold space-x-2 items-center">
-                        <span>Sign out</span>
-                        <Image src={logout} height={28} width={28} alt="logout" />
-                    </button>
-                </form> :
-                <AuthButton />}
+                    <div className="flex items-center">
+                        <Link href="/account" className="absolute -left-[5rem] bg-slate-100 p-3 rounded-full hover:bg-slate-200" >
+                            <Image src={account} height={24} width={24} alt="account settings" />
+                        </Link> 
+                        <form action={handleLogout}>
+                            <button type="submit" className="flex text-white font-bold space-x-1 items-center">
+                                <span>Sign out</span>
+                                <Image src={logout} height={24} width={24} alt="logout" />
+                            </button>
+                        </form>
+                    </div> 
+                    :
+                    <AuthButton />
+                }
             </div>
             
         </nav>
