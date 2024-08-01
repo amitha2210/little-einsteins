@@ -196,7 +196,7 @@ const GoogleMap = ({ session }) => {
     return (
         <div className="flex">
             <div className={`${open ? "w-7/12" : "w-full"} flex flex-col items-center justify-center`}>
-                <div className={`${(!selectedPlace && !searchResult) ? "h-[calc(100vh-6rem)]" : "h-full"} relative w-full items-center justify-center flex flex-col p-10 py-20`}>
+                <div className={`${(!selectedPlace && !searchResult) ? "h-[calc(100vh-6rem)]" : "h-full"} mb-5 relative w-full items-center justify-center flex flex-col p-10 py-20`}>
                     <Image 
                         src={explorePageBg} 
                         fill

@@ -348,6 +348,8 @@ export const getTrips =  async (email) => {
             }
         }
     ]).toArray()
+    //const sortedTrips = trips?.[0]?.trips?.sort((a, b) => new Date(a.startDate) - new Date(b.startDate))
+
     //return array of trips with locations array sorted by time
     return trips?.[0]?.trips
 }

@@ -54,7 +54,7 @@ const SearchCard = ({ id, name, address, description, rating, userRatingCount, g
     const popular = isPopular(rating, userRatingCount)
 
     return (
-        <div className="relative flex my-4 shadow-slate-300 shadow-md text-slate-600 w-full rounded-xl">
+        <div className="relative flex my-4 shadow-slate-300 border shadow-md text-slate-600 w-full rounded-xl">
             <div className="p-3 w-7/12">
                 
                 <h1 className="relative p-3 text-xl font-semibold">{name}</h1>
