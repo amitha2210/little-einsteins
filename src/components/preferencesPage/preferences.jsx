@@ -266,19 +266,6 @@ const Preferences = ({session}) => {
                 ): null}
             </div>
         </div>
-        <div className="flex justify-center">
-            <button 
-                type="submit" 
-                style={{ 
-                    padding: '8px 12px', 
-                    backgroundColor: '#00b4d8', 
-                    color: '#fff', 
-                    border: 'none', 
-                    borderRadius: '4px' }}
-                    onClick={() => handleSave}>
-                        Save
-                </button>
-        </div>
             <div className="flex mt-1 justify-center">
                     <button
                         type="submit"
