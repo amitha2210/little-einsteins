@@ -64,19 +64,19 @@ export default function Landing() {
                 Use TravelGenie to plan your trips with ease
             </div>
 
-            <div className="grid grid-cols-2 items-center justify-center py-10 px-60 gap-5">
+            <div className="grid grid-cols-2 items-center justify-center py-10 pb-20 px-80 gap-6">
                 {features.map((feature, index) => (
                     <div 
                         key={index} 
                         className="even:translate-y-10 h-full w-full p-10 border border-[#00b4d8]/50 flex flex-col items-center justify-center 
                         space-y-10 rounded-3xl shadow-lg bg-slate-50/30"
                     >
-                        <Image src={feature.imageUrl} height={150} width={150} alt="feature icon"/>
+                        <Image src={feature.imageUrl} height={125} width={125} alt="feature icon"/>
                         <div className="space-y-2">
-                            <h1 className="font-light text-slate-800 text-2xl">
+                            <h1 className="font-light text-slate-800 text-xl">
                                 {feature.title}
                             </h1>
-                            <p className="text-lg text-slate-500">
+                            <p className="text-md text-slate-600">
                                 {feature.text}
                             </p>
                         </div>

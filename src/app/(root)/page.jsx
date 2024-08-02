@@ -13,7 +13,6 @@ export default async function Home() {
       {email ?
         <div className="flex flex-col w-full items-center justify-center">   
           <Itinerary email={email} />
-        
         </div>
         //<HomePage email={email} />
         :

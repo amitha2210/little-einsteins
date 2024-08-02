@@ -11,7 +11,6 @@ import account from "@/assets/account.svg"
 import planColour from "@/assets/plan-coloured.svg"
 import exploreColour from "@/assets/explore-coloured.svg"
 import homeColour from "@/assets/home-coloured.svg"
-import accountColour from "@/assets/account-coloured.svg"
 import logout from "@/assets/logout.svg"
 import NavLink from "./NavLink"
 
@@ -74,8 +73,8 @@ const Navbar = async () => {
             <div className="absolute flex right-[2rem] p-3 bg-[#00b4d8] items-center justify-center rounded-2xl">
                 {session ?
                     <div className="flex items-center">
-                        <Link href="/account" className="absolute -left-[5rem] bg-slate-100 p-3 rounded-full hover:bg-slate-200" >
-                            <Image src={account} height={24} width={24} alt="account settings" />
+                        <Link href="/account" className="absolute -left-[4rem] shadow-sm p-2 rounded-full hover:bg-slate-200" >
+                            <Image src={account} height={32} width={32} alt="account settings" />
                         </Link> 
                         <form action={handleLogout}>
                             <button type="submit" className="flex text-white font-bold space-x-1 items-center">

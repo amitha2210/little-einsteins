@@ -81,6 +81,65 @@ export const login = async (previousState, formData) => {
     }
 }
 
+export const getUserByEmail = async (email) => {
+    const client = await ConnectionDB
+    const user = await client.db("credentials").collection("credentials").findOne(
+        { "email": email},
+        { projection: { "_id": 0 } }
+    )
+    console.log(user)
+    return user
+}
+
+export const updateUsername = async (email, previousState, formData) => {
+    const { username } = Object.fromEntries(formData)
+
+    const client = await ConnectionDB
+    try {
+        
+        const user = await client.db("credentials").collection("credentials").findOne({ "username": username })
+
+        if (user) {
+            return { error: "Username already exists" }
+        }
+
+        await client.db("credentials").collection("credentials").findOneAndUpdate(
+            { email: email },
+            { $set: { username: username, updated: new Date() }}
+        )
+
+        return { success: "username changed" }
+
+    } catch (error) {
+        console.log(error)
+        return { error: "Something went wrong" }
+    }
+}
+
+export const updatePassword = async (email, previousState, formData) => {
+    const { password, passwordAgain } = Object.fromEntries(formData)
+    
+    if (password !==passwordAgain) {
+        return { error: "Passwords do not match!" }
+     }
+ 
+     const salt = await bcryptjs.genSalt(10)
+     const hashedpassword = await bcryptjs.hash(password, salt)
+ 
+    try {
+        const client = await ConnectionDB
+        await client.db("credentials").collection("credentials").findOneAndUpdate(
+            { email: email },
+            { $set: { password: hashedpassword, updated: new Date() }}
+        )
+        return { success: "password changed" }
+ 
+     } catch (error) {
+        console.log(error)
+        return { error: "Something went wrong!" }
+     }
+}
+
 export const saveLocationToDB = async (location, email) => {
     const client = await ConnectionDB
     await client.db("places").collection("savedPlaces").findOneAndUpdate(

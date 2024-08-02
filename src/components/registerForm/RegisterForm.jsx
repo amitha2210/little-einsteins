@@ -6,8 +6,6 @@ import { useEffect } from "react"
 import { useFormState } from "react-dom"
 import styles from "./RegisterForm.module.css"
 import ErrorMessage from "../ErrorMessage"
-import app from "@/assets/app.svg"
-import Image from "next/image"
 
 function RegisterForm() {
 
