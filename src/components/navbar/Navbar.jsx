@@ -1,18 +1,18 @@
 import Link from "next/link";
-import AuthButton from "./AuthButton";
+import Image from "next/image"
+import appColour from "@/app/icon.png"
+import plan from "@/assets/navbar/plan.svg"
+import planColour from "@/assets/navbar/plan-coloured.svg"
+import explore from "@/assets/navbar/explore.svg"
+import exploreColour from "@/assets/navbar/explore-coloured.svg"
+import home from "@/assets/navbar/home.svg"
+import homeColour from "@/assets/navbar/home-coloured.svg"
+import account from "@/assets/navbar/account.svg"
+import logout from "@/assets/navbar/logout.svg"
 import { handleLogout } from "@/utils/action";
 import { auth } from "@/utils/auth/auth";
-import appColour from "@/app/icon.png"
-import Image from "next/image"
-import plan from "@/assets/plan.svg"
-import explore from "@/assets/explore.svg"
-import home from "@/assets/home.svg"
-import account from "@/assets/account.svg"
-import planColour from "@/assets/plan-coloured.svg"
-import exploreColour from "@/assets/explore-coloured.svg"
-import homeColour from "@/assets/home-coloured.svg"
-import logout from "@/assets/logout.svg"
 import NavLink from "./NavLink"
+import AuthButton from "./AuthButton";
 
 const navigation = [
     {

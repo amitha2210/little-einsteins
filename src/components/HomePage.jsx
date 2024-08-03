@@ -1,11 +1,12 @@
 "use client"
 import { useEffect, useState } from "react"
-import { getTrips } from "@/utils/action"
 import { useRouter } from "next/navigation"
-import ItineraryCard from "./itinerary/ItineraryCard"
-import homepageBg from "@/assets/homepage-background.jpg"
 import Image from "next/image"
 import Link from "next/link"
+import ItineraryCard from "./itinerary/ItineraryCard"
+import { getTrips } from "@/utils/action"
+import homepageBg from "@/assets/background/homepage.jpg"
+
 
 const HomePage = ({ email }) => {
 

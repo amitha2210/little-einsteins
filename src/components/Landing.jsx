@@ -4,7 +4,7 @@ import expenses from "@/assets/features/expenses.svg"
 import collaborate from "@/assets/features/collaborate.svg"
 import manage from "@/assets/features/manage.svg"
 import generate from "@/assets/features/generate.svg"
-import landingPageBg from "@/assets/landing-page.jpg"
+import landingPageBg from "@/assets/background/landing-page.jpg"
 
 const features = [
     {
@@ -69,7 +69,7 @@ export default function Landing() {
                     <div 
                         key={index} 
                         className="even:translate-y-10 h-full w-full p-10 border border-[#00b4d8]/50 flex flex-col items-center justify-center 
-                        space-y-10 rounded-3xl shadow-lg bg-slate-50/30"
+                            space-y-10 rounded-3xl shadow-lg bg-slate-50/30"
                     >
                         <Image src={feature.imageUrl} height={125} width={125} alt="feature icon"/>
                         <div className="space-y-2">

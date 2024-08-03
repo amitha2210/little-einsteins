@@ -1,4 +1,3 @@
-//FORM ACTION FUNCTIONS
 "use server"
 import ConnectionDB from "./mongodb"
 import bcryptjs from "bcryptjs"
@@ -121,13 +120,21 @@ export const updatePassword = async (email, previousState, formData) => {
     
     if (password !==passwordAgain) {
         return { error: "Passwords do not match!" }
-     }
+    }
+    
+    const user = await getUserByEmail(email)
+    const samePassword = await bcryptjs.compare(password, user.password)
+
+    if (samePassword) {
+        return { error: "Please enter a new password" }
+    }
  
-     const salt = await bcryptjs.genSalt(10)
-     const hashedpassword = await bcryptjs.hash(password, salt)
+    const salt = await bcryptjs.genSalt(10)
+    const hashedpassword = await bcryptjs.hash(password, salt)
  
     try {
         const client = await ConnectionDB
+
         await client.db("credentials").collection("credentials").findOneAndUpdate(
             { email: email },
             { $set: { password: hashedpassword, updated: new Date() }}

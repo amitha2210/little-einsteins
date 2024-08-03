@@ -1,11 +1,11 @@
 "use client"
-import { resetPasswordEmail } from "@/utils/resetPassword/resetPassword"
-import styles from "./ResetPasswordEmailForm.module.css"
 import { useFormState } from "react-dom"
-import ErrorMessage from "../ErrorMessage"
 import Image from "next/image"
-import mail from "@/assets/mail.svg"
-import send from "@/assets/send.svg"
+import mail from "@/assets/auth/mail.svg"
+import send from "@/assets/auth/send.svg"
+import styles from "./ResetPasswordEmailForm.module.css"
+import { resetPasswordEmail } from "@/utils/resetPassword/resetPassword"
+import ErrorMessage from "../ErrorMessage"
 
 function ResetPasswordEmailForm() {
 

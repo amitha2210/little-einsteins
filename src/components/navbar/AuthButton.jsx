@@ -1,9 +1,8 @@
 "use client"
-import LoginForm from "../loginForm/LoginForm";
 import { useState } from "react"
-import close from "@/assets/close.svg"
 import Image from "next/image";
-import login from "@/assets/login.svg"
+import login from "@/assets/navbar/login.svg"
+import LoginForm from "../loginForm/LoginForm";
 
 const AuthButton = () => {
 

@@ -38,9 +38,13 @@ const Footer = () => {
   return (
     <footer className="absolute bottom-0 w-full h-[12rem] bg-[#11a9c7]/90 text-slate-50 p-5 px-12 shadow-sm">
       <div className="w-full justify-between flex">
-        <div className="">
-          <h1 className="text-white text-lg font-medium mb-2 border-b pb-0.5">About TravelGenie</h1>
-          <p>Your go-to travel companion. <br/> Explore new destinations with us today!</p>
+        <div>
+          <h1 className="text-white text-lg font-semibold mb-2 border-b pb-0.5">About TravelGenie</h1>
+          <p className="text-base">
+            Your go-to travel companion. 
+            <br/> 
+            Explore new destinations with us today!
+          </p>
         </div>
         
         <div className="flex flex-col space-y-1">
@@ -50,13 +54,13 @@ const Footer = () => {
           <Link href="/explore" className="hover:underline">Explore</Link>
         </div>
         
-        <div className="">
+        <div>
           <h1 className="text-white text-lg font-medium mb-2 border-b pb-0.5">Contact Us</h1>
           <p>Email: info@travelgenie.com</p>
           <p>Phone: +12 3456 7890</p>
         </div>
         
-        <div className="">
+        <div>
           <p className="text-white text-lg font-medium mb-3">Follow Us</p>
           <div className="flex space-x-3">
             {socials.map((social, index) => (

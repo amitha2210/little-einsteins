@@ -1,18 +1,18 @@
 "use client"
-import { getSavedLocations, getTrips } from "@/utils/action"
-import ItineraryCard from "./ItineraryCard"
 import { useState, useEffect } from "react"
+import Link from "next/link"
+import Image from "next/image"
+import { getSavedLocations, getTrips } from "@/utils/action"
+import bg from "@/assets/background/my-trips.jpg"
+import savedPlacesIcon from "@/assets/saved-places-coloured.svg"
+import addIcon from "@/assets/add.svg"
+import GoogleMap from "./GoogleMap"
+import CreateItinerary from "./CreateItinerary"
+import ItineraryCard from "./ItineraryCard"
 import TripDetails from "./TripDetails"
 import SavedPlacesCard from "./savedPlaces/SavedPlacesCard"
-import bg from "@/assets/travelbg.jpg"
-import savedPlacesIcon from "@/assets/saved-places-coloured.svg"
-import Image from "next/image"
-import CreateItinerary from "./CreateItinerary"
-import addIcon from "@/assets/add.svg"
-import Link from "next/link"
-import GoogleMap from "./GoogleMap"
 
-const Itinerary = ({ email, session }) => {
+const Itinerary = ({ email }) => {
 
     const [trips, setTrips] = useState([])
     const [showTripDetails, setShowTripDetails] = useState(null)

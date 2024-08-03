@@ -11,7 +11,7 @@ import searchIcon from "@/assets/search.svg"
 import searchIconColoured from "@/assets/search-coloured.svg"
 import mapIcon from "@/assets/map.svg"
 import mapIconColoured from "@/assets/map-coloured.svg"
-import pinonmap from "@/assets/pinonmap.svg"
+import pinonmap from "@/assets/savedPlaces/pinonmap.svg"
 
 function formatDate(date) {
     const num = date.slice(8, 10)

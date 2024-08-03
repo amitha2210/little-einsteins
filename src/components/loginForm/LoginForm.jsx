@@ -1,15 +1,12 @@
 "use client"
-import { login } from "@/utils/action"
-import styles from "./LoginForm.module.css"
 import Link from "next/link"
 import Image from "next/image"
 import { useFormState } from "react-dom"
-import { handleGoogleLogin } from "@/utils/action"
-import google from "@/assets/google.svg"
-import ErrorMessage from "../ErrorMessage"
+import google from "@/assets/auth/google.svg"
 import close from "@/assets/close.svg"
-import app from "@/assets/app.svg"
-import { useState } from "react"
+import { login, handleGoogleLogin } from "@/utils/action"
+import styles from "./LoginForm.module.css"
+import ErrorMessage from "../ErrorMessage"
 
 function LoginForm({ loginPage, openForm }) {
 

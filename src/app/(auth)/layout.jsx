@@ -1,5 +1,5 @@
 import Image from "next/image"
-import authBackground from "@/assets/auth-background.jpg"
+import authBackground from "@/assets/background/auth.jpg"
 
 const layout = ({ children }) => {
   return (
