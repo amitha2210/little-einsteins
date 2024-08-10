@@ -1,14 +1,13 @@
 "use client"
-import { resetPassword } from "@/utils/resetPassword/resetPassword"
-import styles from "./ResetPasswordForm.module.css"
 import { useFormState } from "react-dom"
 import { useSearchParams } from "next/navigation"
-import { useState, useTransition } from "react"
-import ErrorMessage from "../ErrorMessage"
 import Image from "next/image"
-import password from "@/assets/password.svg"
 import Link from "next/link"
- 
+import password from "@/assets/auth/password.svg"
+import styles from "./ResetPasswordForm.module.css"
+import { resetPassword } from "@/utils/resetPassword/resetPassword"
+import ErrorMessage from "../ErrorMessage"
+
 function ResetPasswordForm() {
 
     const searchParams = useSearchParams()

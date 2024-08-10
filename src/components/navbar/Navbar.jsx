@@ -1,19 +1,18 @@
 import Link from "next/link";
-import AuthButton from "./AuthButton";
+import Image from "next/image"
+import appColour from "@/app/icon.png"
+import plan from "@/assets/navbar/plan.svg"
+import planColour from "@/assets/navbar/plan-coloured.svg"
+import explore from "@/assets/navbar/explore.svg"
+import exploreColour from "@/assets/navbar/explore-coloured.svg"
+import home from "@/assets/navbar/home.svg"
+import homeColour from "@/assets/navbar/home-coloured.svg"
+import account from "@/assets/navbar/account.svg"
+import logout from "@/assets/navbar/logout.svg"
 import { handleLogout } from "@/utils/action";
 import { auth } from "@/utils/auth/auth";
-import appColour from "@/app/icon.png"
-import Image from "next/image"
-import plan from "@/assets/plan.svg"
-import explore from "@/assets/explore.svg"
-import home from "@/assets/home.svg"
-import account from "@/assets/account.svg"
-import planColour from "@/assets/plan-coloured.svg"
-import exploreColour from "@/assets/explore-coloured.svg"
-import homeColour from "@/assets/home-coloured.svg"
-import accountColour from "@/assets/account-coloured.svg"
-import logout from "@/assets/logout.svg"
 import NavLink from "./NavLink"
+import AuthButton from "./AuthButton";
 
 const navigation = [
     {
@@ -21,35 +20,24 @@ const navigation = [
         path: "/",
         icon: home,
         iconColour: homeColour,
-        shown: true 
     },
     {
         title: "Plan",
         path: "/plan",
         icon: plan,
         iconColour: planColour,
-        shown: true
     },
     {
         title: "Preferences",
         path: "/preferences",
         icon: plan,
         iconColour: planColour,
-        shown: true
     },
     {
         title: "Explore",
         path: "/explore",
         icon: explore,
         iconColour: exploreColour,
-        shown: true
-    },
-    {
-        title: "Account",
-        path: "/account",
-        icon: account,
-        iconColour: accountColour,
-        shown: false
     }
 ]
 
@@ -78,21 +66,26 @@ const Navbar = async () => {
                         path={link.path} 
                         icon={link.icon} 
                         iconColour={link.iconColour} 
-                        shown={link.shown} 
-                        session={session}
                     /> 
                 )}
             </nav>
 
-            <div className="absolute flex right-[5rem] py-3 px-5 bg-[#00b4d8] items-center justify-center rounded-[30px]">
+            <div className="absolute flex right-[2rem] p-3 bg-[#00b4d8] items-center justify-center rounded-2xl">
                 {session ?
-                <form action={handleLogout}>
-                    <button type="submit" className="flex text-white font-bold space-x-2 items-center">
-                        <span>Sign out</span>
-                        <Image src={logout} height={28} width={28} alt="logout" />
-                    </button>
-                </form> :
-                <AuthButton />}
+                    <div className="flex items-center">
+                        <Link href="/account" className="absolute -left-[4rem] shadow-sm p-2 rounded-full hover:bg-slate-200" >
+                            <Image src={account} height={32} width={32} alt="account settings" />
+                        </Link> 
+                        <form action={handleLogout}>
+                            <button type="submit" className="flex text-white font-bold space-x-1 items-center">
+                                <span>Sign out</span>
+                                <Image src={logout} height={24} width={24} alt="logout" />
+                            </button>
+                        </form>
+                    </div> 
+                    :
+                    <AuthButton />
+                }
             </div>
             
         </nav>

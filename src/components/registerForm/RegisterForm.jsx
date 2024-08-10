@@ -1,13 +1,11 @@
 "use client"
-import { register } from "@/utils/action"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { useFormState } from "react-dom"
+import { register } from "@/utils/action"
 import styles from "./RegisterForm.module.css"
 import ErrorMessage from "../ErrorMessage"
-import app from "@/assets/app.svg"
-import Image from "next/image"
 
 function RegisterForm() {
 

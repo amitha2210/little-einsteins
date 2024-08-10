@@ -1,14 +1,13 @@
 "use client"
 import { useEffect, useRef, useState } from "react"
 import { useJsApiLoader } from "@react-google-maps/api"
+import Image from "next/image"
 import mapIcon from "@/assets/map.svg"
 import mapIconColoured from "@/assets/map-coloured.svg"
 import radioButtonUnchecked from "@/assets/radiobutton-unchecked.svg"
 import radioButtonChecked from "@/assets/radiobutton-checked.svg"
 import searchIcon from "@/assets/search.svg"
-import explorePageBg from "@/assets/explore-page-background.jpg"
-
-import Image from "next/image"
+import explorePageBg from "@/assets/background/explore-page-background.jpg"
 import SearchCard from "./SearchCard"
 
 const lib = ["core", "maps", "places", "marker"]

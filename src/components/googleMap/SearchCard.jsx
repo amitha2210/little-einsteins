@@ -2,16 +2,14 @@
 import descriptionIconColoured from "@/assets/description-coloured.svg"
 import ratingsIconColoured from "@/assets/ratings-coloured.svg"
 import addressIconColoured from "@/assets/address-coloured.svg"
-import popularIcon from "@/assets/popular.svg"
-import hikingIcon from "@/assets/hiking.svg"
 import dropDownArrow from "@/assets/drop-down-arrow.svg"
 import dropUpArrow from "@/assets/drop-up-arrow.svg"
 import checkIcon from "@/assets/check.svg"
 import addIcon from "@/assets/add.svg"
 import openingHoursIcon from "@/assets/openinghours.svg"
-import pinonmap from "@/assets/pinonmap.svg"
-
-
+import popularIcon from "@/assets/savedPlaces/popular.svg"
+import hikingIcon from "@/assets/savedPlaces/hiking.svg"
+import pinonmap from "@/assets/savedPlaces/pinonmap.svg"
 import Image from "next/image"
 import { saveLocationToDB, locationSaved, unsaveLocationDB } from "@/utils/action"
 import { useEffect, useState } from "react"
@@ -54,7 +52,7 @@ const SearchCard = ({ id, name, address, description, rating, userRatingCount, g
     const popular = isPopular(rating, userRatingCount)
 
     return (
-        <div className="relative flex my-4 shadow-slate-300 shadow-md text-slate-600 w-full rounded-xl">
+        <div className="relative flex my-4 shadow-slate-300 border shadow-md text-slate-600 w-full rounded-xl">
             <div className="p-3 w-7/12">
                 
                 <h1 className="relative p-3 text-xl font-semibold">{name}</h1>
