@@ -6,13 +6,13 @@ import Icons from "./Icons";
 import { DateRangePicker } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
 import styles from "./preferences.css"
-import { storePreferences, createItinerary } from "@/utils/action";
+import { storePreferences, createItinerary2 } from "@/utils/action";
 import generateText from "@/utils/gemini2"
 import { useFormState } from "react-dom"
 
 
 const Preferences = ({session}) => {
-
+t
     const [inputText, setInputText] = useState('');
     const [budget, setBudget] = useState(0);
     const [dateRange, setDateRange] = useState([null, null]);
@@ -145,7 +145,8 @@ const Preferences = ({session}) => {
 
         const geminiString = makeString(destination, start, end, types)
         const generatedText = await generateText(geminiString);
-        createItinerary2(email, [start, end], destination);
+        const dates = [start, end];
+        await createItinerary2(session.user.email, dates, destination);
         generateText.days.map(day => 
             day.locations.map(location => search(location))
           );
