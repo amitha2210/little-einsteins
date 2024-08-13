@@ -10,7 +10,7 @@ async function preferencesPage() {
   
   return (
     <div>
-      <Preferences />
+      <Preferences session={session}/>
     </div>
   )
 }

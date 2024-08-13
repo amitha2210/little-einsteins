@@ -6,7 +6,7 @@ import Icons from "./Icons";
 import { DateRangePicker } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
 import styles from "./preferences.css"
-import { storePreferences } from "@/utils/action";
+import { storePreferences, createItinerary } from "@/utils/action";
 import generateText from "@/utils/gemini2"
 import { useFormState } from "react-dom"
 
@@ -21,6 +21,7 @@ const Preferences = ({session}) => {
     const [menuOpen, setMenuOpen] = useState(false);
     const inputRef = useRef(null);
     const [state, formAction] = useFormState(generateText, "")
+    const email = session?.user?.email;
 
 
     const tags = [
@@ -105,13 +106,51 @@ const Preferences = ({session}) => {
                 }}`;
     }
 
+    async function search(location) {
+
+        if (!map) return
+        const japanBounds = new google.maps.LatLngBounds(
+            new google.maps.LatLng({
+                lat: 34.925910778668744, 
+                lng: 138.24859834647026
+            }),
+            new google.maps.LatLng({
+                lat: 36.14655591375202, 
+                lng: 139.87042995969628
+            })    
+        )
+
+        //search request
+        const textSearchRequest =  {
+            fields: [
+                "displayName", 
+                "editorialSummary", 
+                "formattedAddress", 
+                "googleMapsURI", 
+                "location", 
+                "photos", 
+                "rating", 
+                "userRatingCount", 
+                "regularOpeningHours"
+            ],
+            textQuery: location,
+            locationBias: japanBounds,
+            language: "en",
+            maxResultCount: 10
+        }
+    }
+
+
     const handleGenerate = async (destination, start, end, types) => {
 
         const geminiString = makeString(destination, start, end, types)
         const generatedText = await generateText(geminiString);
+        createItinerary2(email, [start, end], destination);
+        generateText.days.map(day => 
+            day.locations.map(location => search(location))
+          );
         console.log('Generated Itinerary String:', generatedText);
     }
-
 
 
     const filteredTags = tags.filter((item)=> 
@@ -278,6 +317,7 @@ const Preferences = ({session}) => {
                             onClick={() => handleGenerate(inputText, dateRange[0], dateRange[1], selected)} >
                                 Generate Itinerary
                     </button>
+                    
             </div>  
         </div>
     )

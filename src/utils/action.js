@@ -235,7 +235,57 @@ export const createItinerary = async (email, selectedDates, previousState, formD
             endDate: endDate.toDateString(),
             days: days
         }
+o
+        const trips = await client.db("places").collection("itinerary").findOneAndUpdate(
+            { email: email },
+            { $push: { trips: trip } },
+            { 
+                upsert: true,
+                returnDocument: "after"
+            }  
+        )
+        
+        return { 
+            message: "Itinerary created",
+            tripName: formattedtripName,
+            trips: trips?.trips
+        }
 
+    } catch(error) {
+        console.log(error)
+        return { message: "Something went wrong"}
+    }
+}
+
+export const createItinerary2 = async (email, selectedDates, tripName) => {
+
+    if (!selectedDates) return { message: "Please select trip dates" } 
+    try {
+        const trimName = tripName.trim()
+        const formattedtripName = trimName.charAt(0).toUpperCase() + trimName.slice(1)
+        const startDate = selectedDates[0]
+        const endDate = selectedDates[1]
+
+        const client = await ConnectionDB
+        const days = []
+        let date = new Date(startDate)
+        const end = endDate
+
+        for(let i = 0; date <= end; i++) {
+            days[i] = {
+                date: date.toDateString(),
+                locations: []
+            }
+            date.setDate(date.getDate() + 1)
+        }
+
+        const trip = { 
+            trip: formattedtripName,
+            startDate: startDate.toDateString(),
+            endDate: endDate.toDateString(),
+            days: days
+        }
+o
         const trips = await client.db("places").collection("itinerary").findOneAndUpdate(
             { email: email },
             { $push: { trips: trip } },
