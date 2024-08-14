@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import React from 'react';
 import Icons from "./Icons";
 import { DateRangePicker } from 'rsuite';
@@ -9,10 +9,12 @@ import styles from "./preferences.css"
 import { storePreferences, createItinerary2 } from "@/utils/action";
 import generateText from "@/utils/gemini2"
 import { useFormState } from "react-dom"
+import { useJsApiLoader } from "@react-google-maps/api"
+
 
 
 const Preferences = ({session}) => {
-t
+
     const [inputText, setInputText] = useState('');
     const [budget, setBudget] = useState(0);
     const [dateRange, setDateRange] = useState([null, null]);
@@ -22,7 +24,58 @@ t
     const inputRef = useRef(null);
     const [state, formAction] = useFormState(generateText, "")
     const email = session?.user?.email;
+    const mapRef = useRef(null)
+    const [map, setMap] = useState(null)
 
+    /*const lib = ["core", "maps", "places", "marker"]
+
+    const { isLoaded } = useJsApiLoader({
+        googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+        version: "beta",
+        libraries: lib
+    })
+    useEffect(() => {
+        if (isLoaded) {
+            const position = {
+                lat: 35.68148944061189, 
+                lng: 139.7669914983956
+            }
+
+            //map options
+            const mapOptions = {
+                center: position,
+                zoom: 12,
+                mapId: "myApp"
+            }
+
+            //setup map
+            const map = new google.maps.Map(mapRef.current, mapOptions)
+            setMap(map)
+
+            //map bounds
+            const japanBounds = new google.maps.LatLngBounds(
+                new google.maps.LatLng({
+                    lat: 34.925910778668744, 
+                    lng: 138.24859834647026
+                }),
+                new google.maps.LatLng({
+                    lat: 36.14655591375202, 
+                    lng: 139.87042995969628
+                })
+                
+            );
+
+            const placeAutocomplete = new google.maps.places.PlaceAutocompleteElement({
+                locationRestriction: japanBounds,
+                componentRestrictions: {
+                    country: ["jp"]
+                }
+            });
+
+            setAutoComplete(placeAutocomplete)
+            autoCompleteRef.current.appendChild(placeAutocomplete)
+        }
+    }, [isLoaded])*/
 
     const tags = [
         "Active",
@@ -106,7 +159,7 @@ t
                 }}`;
     }
 
-    async function search(location) {
+    /*const search = async (location) => {
 
         if (!map) return
         const japanBounds = new google.maps.LatLngBounds(
@@ -138,7 +191,7 @@ t
             language: "en",
             maxResultCount: 10
         }
-    }
+    }*/
 
 
     const handleGenerate = async (destination, start, end, types) => {
@@ -147,9 +200,9 @@ t
         const generatedText = await generateText(geminiString);
         const dates = [start, end];
         await createItinerary2(session.user.email, dates, destination);
-        generateText.days.map(day => 
+        /*generatedText.days.map(day => 
             day.locations.map(location => search(location))
-          );
+          );*/
         console.log('Generated Itinerary String:', generatedText);
     }
 

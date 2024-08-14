@@ -6,16 +6,18 @@ import generateText from "@/utils/gemini2"
 import { useFormState } from "react-dom"
 
 function Plan() {
-    const [state, formAction] = useFormState(generateText, "")
+    async function plan2() {
+        const [state, formAction] = useFormState(generateText, "")
+        const session = await auth()
 
-    return (
-        <div>
+        return (
             <div>
-                <Preferences />
-            </div>
-        </div>      
-    )
-   
+                <div>
+                    <Preferences session={session}/>
+                </div>
+            </div>      
+        )
+    }
 }
 
 export default Plan
