@@ -64,11 +64,11 @@ export default function Landing() {
                 Use TravelGenie to plan your trips with ease
             </div>
 
-            <div className="grid grid-cols-2 items-center justify-center py-10 pb-20 px-80 gap-6">
+            <div className="grid place-items-center grid-cols-1 lg:place-items-start lg:grid-cols-2 py-10 pb-20 px-8 gap-6">
                 {features.map((feature, index) => (
                     <div 
                         key={index} 
-                        className="even:translate-y-10 h-full w-full p-10 border border-[#00b4d8]/50 flex flex-col items-center justify-center 
+                        className="lg:even:translate-y-10 lg:odd:justify-self-end h-full w-[25rem] p-10 border border-[#00b4d8]/50 flex flex-col items-center justify-center 
                             space-y-10 rounded-3xl shadow-lg bg-slate-50/30"
                     >
                         <Image src={feature.imageUrl} height={125} width={125} alt="feature icon"/>

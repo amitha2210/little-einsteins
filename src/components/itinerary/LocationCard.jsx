@@ -50,7 +50,7 @@ const LocationCard = ({ email, trip, location, date, setChangeLocation }) => {
     return (
         <div className="w-full flex">
 
-            <div className="flex w-7/12 min-h-[9rem] bg-gray-100 text-slate-600 rounded-2xl shadow-sm">
+            <div className="flex w-7/12 min-w-[22rem] min-h-[9rem] bg-gray-100 text-slate-600 rounded-2xl shadow-sm">
                 <div className="relative w-full px-3 pb-2">
                     
                     <h1 className="p-2 text-lg text-slate-700 font-semibold">{location.name}</h1>
@@ -63,19 +63,19 @@ const LocationCard = ({ email, trip, location, date, setChangeLocation }) => {
                                 </td>
                                 <td className="p-1 text-sm">{location.address}</td>
                             </tr>
-                            {/* <tr className={`${seeDetails ? "" : "hidden"}`}>
-                                <td className="flex p-2 h-fit size-16 justify-center">
+                            <tr className={`${seeDetails ? "" : "hidden"}`}>
+                                <td className="flex p-2 h-fit size-10 justify-center">
                                     <Image src={descriptionIcon} height={24} width={24} alt="descriptionIcon"/>
                                 </td>
-                                <td className="p-1">{location.description}</td>
-                            </tr> */}
+                                <td className="p-1 text-sm">{location.description}</td>
+                            </tr>
                             
-                            {/* <tr className={`${seeDetails ? "" : "hidden"}`}> 
-                                <td className="flex p-2 h-fit size-16 justify-center">
+                            <tr className={`${seeDetails ? "" : "hidden"}`}> 
+                                <td className="flex p-2 h-fit size-10 justify-center">
                                     <Image src={ratingsIcon} height={24} width={24} alt="descriptionIcon"/>
                                 </td>
                                 <td className="p-1 text-sm">{location.rating} ({location.userRatingCount})</td>
-                            </tr> */}
+                            </tr>
                             <tr className={`${seeDetails ? "" : "hidden"}`}> 
                                 <td className="flex p-2 h-fit size-10 justify-center">
                                     <Image src={openingHours} height={24} width={24} alt="opening hours icon"/>
@@ -123,7 +123,7 @@ const LocationCard = ({ email, trip, location, date, setChangeLocation }) => {
                             className={`${openTimeMenu ? "bg-slate-300" : "bg-white"} flex items-center space-x-1 p-1 rounded-md hover:bg-slate-200`}
                         >
                             <Image src={scheduleIcon} height={20} width={20} alt="schedule"/>
-                            <span className="text-xs text-[#19a3bf]">
+                            <span className="text-[0.7rem] text-[#19a3bf]">
                                 {location.startTime.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
                                 ~
                                 {location.endTime.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}

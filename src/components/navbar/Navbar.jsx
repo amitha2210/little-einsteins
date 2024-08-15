@@ -13,6 +13,7 @@ import { handleLogout } from "@/utils/action";
 import { auth } from "@/utils/auth/auth";
 import NavLink from "./NavLink"
 import AuthButton from "./AuthButton";
+import Menu from "./Menu"
 
 const navigation = [
     {
@@ -58,35 +59,39 @@ const Navbar = async () => {
                 </div>
             </Link>
             
-            <nav className="flex space-x-16">
-                {navigation.map((link, index) =>
-                    <NavLink 
-                        key={index} 
-                        title={link.title} 
-                        path={link.path} 
-                        icon={link.icon} 
-                        iconColour={link.iconColour} 
-                    /> 
-                )}
-            </nav>
+            <div className="hidden lg:block">
+                <nav className="flex space-x-12">
+                    {navigation.map((link, index) =>
+                        <NavLink 
+                            key={index} 
+                            title={link.title} 
+                            path={link.path} 
+                            icon={link.icon} 
+                            iconColour={link.iconColour} 
+                        /> 
+                    )}
+                </nav>
 
-            <div className="absolute flex right-[2rem] p-3 bg-[#00b4d8] items-center justify-center rounded-2xl">
-                {session ?
-                    <div className="flex items-center">
-                        <Link href="/account" className="absolute -left-[4rem] shadow-sm p-2 rounded-full hover:bg-slate-200" >
-                            <Image src={account} height={32} width={32} alt="account settings" />
-                        </Link> 
-                        <form action={handleLogout}>
-                            <button type="submit" className="flex text-white font-bold space-x-1 items-center">
-                                <span>Sign out</span>
-                                <Image src={logout} height={24} width={24} alt="logout" />
-                            </button>
-                        </form>
-                    </div> 
-                    :
-                    <AuthButton />
-                }
+                <div className="absolute flex right-[2rem] bottom-5 p-2 px-3 bg-[#00b4d8] items-center justify-center rounded-2xl">
+                    {session ?
+                        <div className="flex items-center">
+                            <Link href="/account" className="absolute -left-[4rem] shadow-sm p-2 rounded-full hover:bg-slate-200" >
+                                <Image src={account} height={32} width={32} alt="account settings" />
+                            </Link> 
+                            <form action={handleLogout}>
+                                <button type="submit" className="flex text-white font-bold space-x-1 items-center">
+                                    <span>Sign out</span>
+                                    <Image src={logout} height={24} width={24} alt="logout" />
+                                </button>
+                            </form>
+                        </div> 
+                        :
+                        <AuthButton />
+                    }
+                </div>    
             </div>
+            
+            <Menu session={session}/>
             
         </nav>
         
