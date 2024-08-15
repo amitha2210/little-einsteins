@@ -27,14 +27,14 @@ const Preferences = ({session}) => {
     const mapRef = useRef(null)
     const [map, setMap] = useState(null)
 
-    /*const lib = ["core", "maps", "places", "marker"]
+    const lib = ["core", "maps", "places", "marker"]
 
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
         version: "beta",
         libraries: lib
     })
-    useEffect(() => {
+    /*useEffect(() => {
         if (isLoaded) {
             const position = {
                 lat: 35.68148944061189, 
@@ -159,7 +159,7 @@ const Preferences = ({session}) => {
                 }}`;
     }
 
-    /*const search = async (location) => {
+    const search = async (location) => {
 
         if (!map) return
         const japanBounds = new google.maps.LatLngBounds(
@@ -191,8 +191,7 @@ const Preferences = ({session}) => {
             language: "en",
             maxResultCount: 10
         }
-    }*/
-
+    }
 
     const handleGenerate = async (destination, start, end, types) => {
 
@@ -200,9 +199,9 @@ const Preferences = ({session}) => {
         const generatedText = await generateText(geminiString);
         const dates = [start, end];
         await createItinerary2(session.user.email, dates, destination);
-        /*generatedText.days.map(day => 
+        generatedText.days.map(day => 
             day.locations.map(location => search(location))
-          );*/
+          );
         console.log('Generated Itinerary String:', generatedText);
     }
 

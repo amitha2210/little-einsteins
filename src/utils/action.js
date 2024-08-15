@@ -235,7 +235,7 @@ export const createItinerary = async (email, selectedDates, previousState, formD
             endDate: endDate.toDateString(),
             days: days
         }
-o
+
         const trips = await client.db("places").collection("itinerary").findOneAndUpdate(
             { email: email },
             { $push: { trips: trip } },
@@ -285,7 +285,7 @@ export const createItinerary2 = async (email, selectedDates, tripName) => {
             endDate: endDate.toDateString(),
             days: days
         }
-o
+
         const trips = await client.db("places").collection("itinerary").findOneAndUpdate(
             { email: email },
             { $push: { trips: trip } },
