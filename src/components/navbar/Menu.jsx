@@ -74,15 +74,25 @@ const Menu = ({ session }) => {
                     
                 )}
                 {session ?
-                    <form action={handleLogout}>
-                        <button 
-                            type="submit" 
-                            className="bg-[#00b4d8] p-2 px-4 rounded-lg flex text-xl text-white space-x-1 items-center"
-                        >
-                            <span>Sign out</span>
-                            <Image src={logout} height={24} width={24} alt="logout" />
+                    <>
+                        <button onClick={() => setOpen(false)}>
+                            <Link 
+                                href="/account"
+                                className="p-2 hover:bg-slate-100 rounded-lg text-slate-700 text-2xl font-light" 
+                            >
+                                Account
+                            </Link> 
                         </button>
-                    </form>
+                        <form action={handleLogout}>
+                            <button 
+                                type="submit" 
+                                className="bg-[#00b4d8] p-2 px-4 rounded-lg flex text-xl text-white space-x-1 items-center"
+                            >
+                                <span>Sign out</span>
+                                <Image src={logout} height={24} width={24} alt="logout" />
+                            </button>
+                        </form>
+                    </>
                     :
                     <Link href="/login" className="bg-[#00b4d8] p-2 px-4 rounded-lg flex text-xl text-white space-x-1 items-center">
                         <span>Log in</span>
