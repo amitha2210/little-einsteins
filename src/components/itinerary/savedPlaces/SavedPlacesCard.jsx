@@ -149,7 +149,14 @@ const SavedPlacesCard = ({ email, location, selectedTrip, setChangeLocation }) =
             
             {location.placeImg ?
                 <div className="relative w-5/12 rounded-xl -z-50">
-                    <Image src={location.placeImg} fill={true} alt="place image" style={{objectFit: "cover"}} sizes="" className="rounded-r-xl"/>
+                    <Image 
+                        src={location.placeImg} 
+                        fill={true} 
+                        alt="place image" 
+                        style={{objectFit: "cover"}}                         
+                        sizes="(max-width: 1536px) 30vw" 
+                        className="rounded-r-xl"
+                    />
                 </div>
                 :
                 <div className="w-5/12 flex items-center justify-center font-semibold bg-slate-50">

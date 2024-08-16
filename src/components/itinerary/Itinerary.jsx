@@ -81,6 +81,7 @@ const Itinerary = ({ email }) => {
                     src={bg} 
                     fill
                     style={{ opacity: "70%", objectFit: "cover" }}
+                    priority={true}
                     className="-z-50"
                     alt="background"
                 />

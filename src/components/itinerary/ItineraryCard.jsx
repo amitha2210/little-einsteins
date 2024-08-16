@@ -31,7 +31,14 @@ const ItineraryCard = ({ email, trip, setShowTripDetails }) => {
             </div>
             <div className="relative w-5/12">
                 {coverPic && 
-                    <Image src={coverPic} alt="trip cover photo" fill={true} style={{objectFit: "cover"}} className="rounded-r-2xl"/>
+                    <Image 
+                        src={coverPic} 
+                        alt="trip cover photo" 
+                        fill={true} 
+                        style={{objectFit: "cover"}}
+                        sizes="(max-width: 1536px) 30vw" 
+                        className="rounded-r-2xl"
+                    />
                 }
             </div>
             

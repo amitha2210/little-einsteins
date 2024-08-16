@@ -189,7 +189,16 @@ const LocationCard = ({ email, trip, location, date, setChangeLocation }) => {
                 </div>
             </div>
             <div className="relative w-4/12 h-[9rem] ml-6">
-                <Image src={location.placeImg} fill={true} alt="place image" style={{objectFit: "cover"}} sizes="" className="rounded-xl"/>
+                {location.placeImg && 
+                    <Image 
+                        src={location.placeImg} 
+                        fill={true} 
+                        alt="place image" 
+                        style={{objectFit: "cover"}} 
+                        sizes="(max-width: 1536px) 30vw" 
+                        className="rounded-xl"
+                    />
+                }
             </div>
         </div>
         
