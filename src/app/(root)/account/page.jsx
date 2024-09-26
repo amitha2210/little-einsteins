@@ -8,7 +8,7 @@ const AccountPage = async () => {
   const email = session?.user?.email
 
   return (
-    <div>
+    <div className="pb-10">
       <Account email={email} />
     </div>
   )
