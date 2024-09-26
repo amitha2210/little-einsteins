@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# TravelGenie
+Welcome to TravelGenie - an AI-powered travel planner. This application leverages AI
+to help users create personalised travel itineraries based on their preferences,
+such as acitivies and duration of the trip.
 
-## Getting Started
+## Table of Contents
+* Overview [Link Text](#overview).
+* Features [Link Text](#features).
+* Installation [Link Text](#installation).
+* Usage [Link Text](#usage).
+* Tech Stack [Link Text](#tech-stack).
+* Contributors [Link Text](#contributors).
 
-First, run the development server:
+## Overview
+TravelGenie is designed to streamline the process of planning a trip by suggesting itineraries 
+based on user inputs such as budget, interests, and destination. 
+Whether you're planning a weekend getaway or an international adventure, the AI travel planner 
+helps you find the best recommendations so you do not have to worry about searching for places to visit.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Features
+* User account: Create accounts so that users can save their travel plans and access it across multiple devices.
+* Travel planner: Plan multiple trips in one place and easily edit itineraries.
+* AI-generated itinerary: Uses AI tools to generate a personalised itinerary based on user preferences.
+* Search Functionality: Users can explore places of interest and add to their itinerary.
+
+## Quick Start
+### Prerequisites
+Make sure you have the following installed on your machine:
+* Node.js
+* npm (Node Package Manager)
+
+### Clone the repository
+`git clone https://github.com/amitha2210/little-einsteins.git`
+
+### Navigate to the project directory
+`cd little-einsteins`
+
+### Installation
+Install project dependencies using npm:
+`npm install`
+
+### Set up environment variables
+Create a new file named .env in the root of your project directory and add the following:
 ```
+MONGODB_URI=
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+AUTH_SECRET=
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+AUTH_GOOGLE_ID=
+AUTH_GOOGLE_SECRET=
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+RESEND_API_KEY=
 
-## Learn More
+GEMINI_API_KEY=
 
-To learn more about Next.js, take a look at the following resources:
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=
+```
+* Add your API keys from **Google Cloud**, **Resend**, and **MongoDB**.
+* Add AUTH_SECRET by running `openssl rand -base64 32`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Running the project
+`npm run dev`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Usage
+1. Create an account using email or using Google.
+2. Generate an itinerary by entering preferences such as activities.
+3. Further customise the itinerary by removing or adding places of interest.
+3. Alternatively, start planning a trip by entering trip name and dates.
+4. Add places of interest to itinerary.
 
-## Deploy on Vercel
+## Tech Stack
+* NextJs
+* React
+* MongoDB
+* NextAuth
+* Google Maps
+* Gemini
+* Resend
+* Tailwind CSS
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Project Roadmap
+### Completed
+* User accounts for multi-device access
+* Travel planner to enable easy viewing and editing of itinerary 
+* AI-generated itinerary based on user preferences
+* Search functionality to explore places of interest
+* Maps functionality to view location
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Future plans
+* Real-time collaboration for planning of trips
+* Expense tracker for user and group trips
+
+## Contributors
+@gladwintan
+@amitha2210
