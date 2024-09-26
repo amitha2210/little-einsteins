@@ -4,12 +4,13 @@ to help users create personalised travel itineraries based on their preferences,
 such as acitivies and duration of the trip.
 
 ## Table of Contents
-* Overview [Link Text](#overview).
-* Features [Link Text](#features).
-* Installation [Link Text](#installation).
-* Usage [Link Text](#usage).
-* Tech Stack [Link Text](#tech-stack).
-* Contributors [Link Text](#contributors).
+* [Overview](#overview)
+* [Features](#features)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Tech Stack](#tech-stack)
+* [Project Roadmap](#project-roadmap)
+* [Contributors](#contributors)
 
 ## Overview
 TravelGenie is designed to streamline the process of planning a trip by suggesting itineraries 
@@ -30,14 +31,20 @@ Make sure you have the following installed on your machine:
 * npm (Node Package Manager)
 
 ### Clone the repository
-`git clone https://github.com/amitha2210/little-einsteins.git`
+```
+git clone https://github.com/amitha2210/little-einsteins.git
+```
 
 ### Navigate to the project directory
-`cd little-einsteins`
+```
+cd little-einsteins
+```
 
 ### Installation
 Install project dependencies using npm:
-`npm install`
+```
+npm install
+```
 
 ### Set up environment variables
 Create a new file named .env in the root of your project directory and add the following:
@@ -59,7 +66,9 @@ NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=
 * Add AUTH_SECRET by running `openssl rand -base64 32`
 
 ### Running the project
-`npm run dev`
+```
+npm run dev
+```
 
 ## Usage
 1. Create an account using email or using Google.
@@ -91,5 +100,6 @@ NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=
 * Expense tracker for user and group trips
 
 ## Contributors
-@gladwintan
-@amitha2210
+[@gladwintan](https://github.com/gladwintan)
+
+[@amitha2210](https://github.com/amitha2210)
