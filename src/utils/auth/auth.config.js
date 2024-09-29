@@ -21,15 +21,19 @@ export const authConfig = {
         },
         authorized({ request: { nextUrl }, auth }) {
             const user = auth?.user
-            const isOnAboutPage = nextUrl?.pathname.startsWith("/about")
+            const isOnPlanPage = nextUrl?.pathname.startsWith("/plan")
             const isOnLoginPage = nextUrl?.pathname.startsWith("/login")
             const isOnRegisterPage = nextUrl?.pathname.startsWith("/register")
+            const isOnPreferencesPage = nextUrl?.pathname.startsWith("/preferences")
 
             //returning false redirects to login page
             //only authenticated users can reach About page
-            if (isOnAboutPage && !user) {
+            if (isOnPlanPage && !user) {
                 return false
-                //return NextResponse.redirect(new URL("/login", nextUrl))
+            }
+
+            if (isOnPreferencesPage && !user) {
+                return false
             }
 
             //only unauthenticated users can reach the login page

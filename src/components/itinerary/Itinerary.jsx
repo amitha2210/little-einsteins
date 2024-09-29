@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useTransition } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { getSavedLocations, getTrips } from "@/utils/action"
@@ -22,13 +22,15 @@ const Itinerary = ({ email }) => {
     const [showSavedPlaces, setShowSavedPlaces] = useState(true)
     const [showMap, setShowMap] = useState(false)
 
+    const [isPending, startTransition] = useTransition()
+
     useEffect(() => {
         const func = async () => {
             const db = await getTrips(email)
             setTrips(db)
             setShowTripDetails(db?.[0])            
         }
-        func()    
+        startTransition(() => func())    
     }, [email])
 
     useEffect(() => {
@@ -85,6 +87,7 @@ const Itinerary = ({ email }) => {
                     className="-z-50"
                     alt="background"
                 />
+
                 {trips?.map((dest, index) => (
                     <div 
                         key={index} 
@@ -105,6 +108,7 @@ const Itinerary = ({ email }) => {
                         />
                     </div>
                 ))}
+
                 {openCreateMenu &&
                     <div className="absolute top-[5.5rem] bg-white border border-slate-300 rounded-lg shadow-lg">
                         <CreateItinerary 
