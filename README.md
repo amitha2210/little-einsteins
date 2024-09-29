@@ -3,6 +3,8 @@ Welcome to TravelGenie - an AI-powered travel planner. This application leverage
 to help users create personalised travel itineraries based on their preferences,
 such as acitivies and duration of the trip.
 
+![UI screenshot](./docs/Ui.png)
+
 ## Table of Contents
 * Overview [Link Text](#overview).
 * Features [Link Text](#features).
