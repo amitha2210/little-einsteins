@@ -278,7 +278,6 @@ const GoogleMap = ({ session }) => {
                                 latLng={selectedPlace.location.toJSON()} 
                                 session={session}
                                 viewOnMap={viewOnMap}
- 
                             />
                         </div>                       
                     </div>

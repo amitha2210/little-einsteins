@@ -6,12 +6,10 @@ import Icons from "./Icons";
 import { DateRangePicker } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
 import styles from "./preferences.css"
-import { storePreferences, createItinerary2 } from "@/utils/action";
+import { storePreferences, createItinerary2, addLocationToItinerary, setLocationItineraryTimeOnGenerate } from "@/utils/action";
 import generateText from "@/utils/gemini2"
 import { useFormState } from "react-dom"
 import { useJsApiLoader } from "@react-google-maps/api"
-
-
 
 const Preferences = ({session}) => {
 
@@ -159,9 +157,9 @@ const Preferences = ({session}) => {
                 }}`;
     }
 
-    const search = async (location) => {
+    async function search(location) {
 
-        if (!map) return
+        if (!isLoaded) return
         const japanBounds = new google.maps.LatLngBounds(
             new google.maps.LatLng({
                 lat: 34.925910778668744, 
@@ -189,8 +187,13 @@ const Preferences = ({session}) => {
             textQuery: location,
             locationBias: japanBounds,
             language: "en",
-            maxResultCount: 10
+            maxResultCount: 1
         }
+
+        //setup search
+        const { places } = await google.maps.places.Place.searchByText(textSearchRequest)
+        const result = Object.values(places)
+        return result?.[0]
     }
 
     const handleGenerate = async (destination, start, end, types) => {
@@ -198,10 +201,42 @@ const Preferences = ({session}) => {
         const geminiString = makeString(destination, start, end, types)
         const generatedText = await generateText(geminiString);
         const dates = [start, end];
-        await createItinerary2(session.user.email, dates, destination);
-        generatedText.days.map(day => 
-            day.locations.map(location => search(location))
-          );
+        const email = session?.user?.email
+        const formattedTripName = destination.trim().charAt(0).toUpperCase() + destination.trim().slice(1)
+
+        await createItinerary2(email, dates, formattedTripName);
+
+        generatedText.days.map(day => {
+            const date = new Date(day.date).toDateString()
+            console.log(date)
+            day.locations.map(location => {
+                const fetchData = async () => {
+                    const searchResult = await search(location.location)
+                    const formattedLocation = {
+                        id: searchResult.id,
+                        name: searchResult.displayName,
+                        address: searchResult.formattedAddress,
+                        description: searchResult.editorialSummary || "Description not Available",
+                        rating: searchResult.rating || "No ratings yet",
+                        userRatingCount: searchResult.userRatingCount,
+                        googleMapLink: searchResult.googleMapsURI,
+                        regularOpeningHours: searchResult.regularOpeningHours?.weekdayDescriptions || "Opening hours not available",
+                        placeImg: searchResult.photos?.[0]?.getURI(),
+                        latLng: searchResult.location.toJSON()
+                    }
+                    await addLocationToItinerary(formattedLocation, formattedTripName, email, date)
+                    await setLocationItineraryTimeOnGenerate(
+                        formattedLocation.id, 
+                        formattedTripName, 
+                        email, 
+                        date, 
+                        location.startTime, 
+                        location.endTime
+                    )
+                }
+                fetchData()
+            })
+        });
         console.log('Generated Itinerary String:', generatedText);
     }
 
