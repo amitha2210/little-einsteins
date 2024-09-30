@@ -208,31 +208,32 @@ const Preferences = ({session}) => {
 
         generatedText.days.map(day => {
             const date = new Date(day.date).toDateString()
-            console.log(date)
             day.locations.map(location => {
                 const fetchData = async () => {
                     const searchResult = await search(location.location)
-                    const formattedLocation = {
-                        id: searchResult.id,
-                        name: searchResult.displayName,
-                        address: searchResult.formattedAddress,
-                        description: searchResult.editorialSummary || "Description not Available",
-                        rating: searchResult.rating || "No ratings yet",
-                        userRatingCount: searchResult.userRatingCount,
-                        googleMapLink: searchResult.googleMapsURI,
-                        regularOpeningHours: searchResult.regularOpeningHours?.weekdayDescriptions || "Opening hours not available",
-                        placeImg: searchResult.photos?.[0]?.getURI(),
-                        latLng: searchResult.location.toJSON()
+                    if (searchResult) {
+                        const formattedLocation = {
+                            id: searchResult.id,
+                            name: searchResult.displayName,
+                            address: searchResult.formattedAddress,
+                            description: searchResult.editorialSummary || "Description not Available",
+                            rating: searchResult.rating || "No ratings yet",
+                            userRatingCount: searchResult.userRatingCount,
+                            googleMapLink: searchResult.googleMapsURI,
+                            regularOpeningHours: searchResult.regularOpeningHours?.weekdayDescriptions || "Opening hours not available",
+                            placeImg: searchResult.photos?.[0]?.getURI(),
+                            latLng: searchResult.location.toJSON()
+                        }
+                        await addLocationToItinerary(formattedLocation, formattedTripName, email, date)
+                        await setLocationItineraryTimeOnGenerate(
+                            formattedLocation.id, 
+                            formattedTripName, 
+                            email, 
+                            date, 
+                            location.startTime, 
+                            location.endTime
+                        ) 
                     }
-                    await addLocationToItinerary(formattedLocation, formattedTripName, email, date)
-                    await setLocationItineraryTimeOnGenerate(
-                        formattedLocation.id, 
-                        formattedTripName, 
-                        email, 
-                        date, 
-                        location.startTime, 
-                        location.endTime
-                    )
                 }
                 fetchData()
             })

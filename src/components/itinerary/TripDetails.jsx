@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useTransition } from "react"
 import LocationCard from "./LocationCard"
 import { Element, scroller } from "react-scroll"
 import { removeTripFromDB } from "@/utils/action"
@@ -48,6 +48,7 @@ const TripDetails = ({
 }) => {
 
     const [scrollToDate, setScrollToDate] = useState(null)
+    const [isPending, startTransition] = useTransition()
     
     const removeTrip = () => {
         const func = async () => {
@@ -55,7 +56,7 @@ const TripDetails = ({
             setTrips(updatedTrips)
             setShowTripDetails(updatedTrips?.[0])            
         }
-        func() 
+        startTransition(() => func()) 
     }
 
     useEffect(() => {
